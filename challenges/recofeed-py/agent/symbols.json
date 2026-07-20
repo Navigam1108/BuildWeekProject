@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Item",
+    "kind": "class",
+    "path": "feed/builder.py",
+    "line": 5
+  },
+  {
+    "name": "FeedBuilder",
+    "kind": "class",
+    "path": "feed/builder.py",
+    "line": 11
+  },
+  {
+    "name": "__init__",
+    "kind": "function",
+    "path": "feed/builder.py",
+    "line": 12
+  },
+  {
+    "name": "build",
+    "kind": "function",
+    "path": "feed/builder.py",
+    "line": 16
+  },
+  {
+    "name": "weight_for",
+    "kind": "function",
+    "path": "feed/builder.py",
+    "line": 23
+  },
+  {
+    "name": "refresh",
+    "kind": "function",
+    "path": "feed/builder.py",
+    "line": 29
+  },
+  {
+    "name": "FeedBuilderTests",
+    "kind": "class",
+    "path": "tests/test_builder.py",
+    "line": 6
+  },
+  {
+    "name": "test_dedupes_seen_items_and_ranks",
+    "kind": "function",
+    "path": "tests/test_builder.py",
+    "line": 7
+  },
+  {
+    "name": "test_refresh_is_idempotent",
+    "kind": "function",
+    "path": "tests/test_builder.py",
+    "line": 12
+  }
+]

@@ -67,5 +67,16 @@ th { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spa
 .pulse-grid div { border: 1px solid var(--line); border-radius: 10px; background: #0d1528; padding: 12px; }
 .pulse-grid strong { display: block; color: var(--accent); font-size: 24px; }
 .pulse-grid span { color: var(--muted); display: block; font-size: 12px; margin-top: 4px; }
+.portfolio-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
+.portfolio-item { border: 1px solid var(--line); border-radius: 10px; background: #0d1528; padding: 15px; }
+.portfolio-item h3 { margin: 6px 0; font-size: 16px; }
+.portfolio-item p { font-size: 13px; margin: 0 0 12px; }
 .code { white-space: pre-wrap; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 13px; line-height: 1.55; background: #080d18; padding: 15px; border-radius: 8px; overflow: auto; }
-@media (max-width: 800px) { .grid.three, .grid.two, .workspace-main, .pulse-grid { grid-template-columns: 1fr; } .ide-frame { min-height: 420px; border-right: 0; border-bottom: 1px solid var(--line); } }
+.scorecard { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 14px; }
+.scorecard h3 { font-size: 14px; letter-spacing: .04em; text-transform: uppercase; color: var(--accent); margin: 0 0 10px; }
+.scorecard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-bottom: 8px; }
+.mission-card { border: 1px solid var(--line); border-radius: 10px; background: #0d1528; padding: 12px; }
+.mission-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.mission-score { font-size: 18px; font-weight: 800; color: var(--accent); }
+.mission-concepts { font-size: 11px; color: var(--muted); margin-top: 4px; }
+@media (max-width: 800px) { .grid.three, .grid.two, .workspace-main, .pulse-grid, .portfolio-grid { grid-template-columns: 1fr; } .ide-frame { min-height: 420px; border-right: 0; border-bottom: 1px solid var(--line); } }

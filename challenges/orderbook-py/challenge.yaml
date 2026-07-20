@@ -1,0 +1,41 @@
+slug: orderbook-py
+title: "Mercury Exchange — matching engine latency"
+language: python
+level: mid
+image: challenge-py
+domain: financial infrastructure
+summary: "Improve the hot path of a limit-order matching service without changing its public API."
+task: |
+  EXCH-117: Market-data bursts are causing order placement and depth snapshots to
+  miss their latency budget. Improve the matching engine while preserving the
+  OrderBook public API. Run `make test` and `make bench` as you work.
+grading:
+  bench_target_ms: 450
+  bench_baseline_ms: 4500
+  golden_target_pct: 50
+  missions:
+    - id: order-lookup
+      name: Order cancellation lookup
+      concepts: [keyed lookup, identity index]
+      weight: 20
+      benchmark: Cancellation latency
+    - id: best-price
+      name: Best executable price
+      concepts: [heap, ordered priority]
+      weight: 20
+      benchmark: Quote latency
+    - id: price-level
+      name: Price-level queueing
+      concepts: [hashing, deque]
+      weight: 20
+      benchmark: Placement throughput
+    - id: depth
+      name: Depth snapshot
+      concepts: [aggregation, incremental summary]
+      weight: 20
+      benchmark: Depth snapshot latency
+    - id: trade-history
+      name: Trade retention
+      concepts: [bounded queue, ring buffer]
+      weight: 20
+      benchmark: Match throughput

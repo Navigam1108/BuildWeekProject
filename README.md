@@ -84,8 +84,26 @@ the interviewer dashboard.
 - `lib/sessions.ts`: per-session repository and Docker lifecycle
 - `lib/agent/`: Scout prompt, read-only tools, provider switch, and streaming
 - `lib/grader.ts`: hidden grader execution and report persistence
-- `challenges/logscope-py/`: first hand-curated challenge pack
+- `challenges/`: eight repository interview packs, each with a candidate and a
+  staff-only golden version
 - `images/`: candidate container image definitions
+
+## Repository interview portfolio
+
+Scout now centers on repository-based performance interviews rather than puzzle
+rounds. Every pack is designed around five independent engineering bottlenecks;
+improving two or three is a strong outcome. See
+[`INTERVIEW-FRAMEWORK.md`](INTERVIEW-FRAMEWORK.md) for the scoring model and
+[`HANDOFFS.md`](HANDOFFS.md) for delegated implementation/calibration work.
+
+- Log processing: `logscope-py`
+- Payments reconciliation: `payfix-py`
+- API gateway cache: `gateway-cache-ts`
+- Order matching: `orderbook-py`
+- Recommendation feed: `recofeed-py`
+- Inventory search: `inventory-search-py`
+- Job scheduler: `dispatch-scheduler-ts`
+- API route mesh: `route-mesh-ts`
 
 ## Verification
 

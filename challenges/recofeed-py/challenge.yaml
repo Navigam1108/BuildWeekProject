@@ -1,0 +1,21 @@
+slug: recofeed-py
+title: "Pulse Feed — recommendation assembly"
+language: python
+level: mid
+image: challenge-py
+domain: consumer recommendations
+summary: "Improve a personalized feed assembler under high-fanout traffic."
+task: |
+  FEED-443: The home-feed service is missing its p95 budget as audience and
+  catalog sizes grow. Keep the FeedBuilder API stable while improving assembly,
+  filtering, ranking, and refresh behavior. Run `make test` and `make bench`.
+grading:
+  bench_target_ms: 350
+  bench_baseline_ms: 5000
+  golden_target_pct: 50
+  missions:
+    - { id: dedupe, name: Candidate deduplication, concepts: [hashing, set membership], weight: 20, benchmark: Candidate merge }
+    - { id: affinity, name: Affinity lookup, concepts: [keyed lookup, memoization], weight: 20, benchmark: Affinity enrichment }
+    - { id: top-k, name: Top feed ranking, concepts: [heap, bounded ranking], weight: 20, benchmark: Ranking latency }
+    - { id: seen, name: Seen-item suppression, concepts: [set membership, batching], weight: 20, benchmark: Filtering throughput }
+    - { id: refresh, name: Refresh cache, concepts: [cache, invalidation], weight: 20, benchmark: Refresh work }

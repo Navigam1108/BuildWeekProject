@@ -3,6 +3,8 @@ title: "Gateway — bounded response cache"
 language: typescript
 level: mid
 image: challenge-ts
+domain: platform
+summary: "Stabilize a gateway cache and hot request path under replay traffic."
 task: |
   API-602: The gateway process grows continuously during a replay load and
   eventually OOMs. Keep the response cache bounded without changing its public
@@ -10,6 +12,33 @@ task: |
 grading:
   bench_target_ms: 200
   bench_baseline_ms: 10000
+  golden_target_pct: 50
+  missions:
+    - id: bounded-cache
+      name: Bounded response cache
+      concepts: [eviction, recency tracking]
+      weight: 20
+      benchmark: Cache size under replay
+    - id: expiry
+      name: Expiry cleanup
+      concepts: [time index, lazy cleanup]
+      weight: 20
+      benchmark: Expired-entry removal
+    - id: headers
+      name: Header normalization
+      concepts: [hashing, canonicalization]
+      weight: 20
+      benchmark: Header lookup throughput
+    - id: coalescing
+      name: Request coalescing
+      concepts: [in-flight map, fan-in]
+      weight: 20
+      benchmark: Duplicate upstream calls
+    - id: invalidation
+      name: Tag invalidation
+      concepts: [reverse index, batching]
+      weight: 20
+      benchmark: Invalidation latency
 agent:
   refusal_topics:
     - LRU

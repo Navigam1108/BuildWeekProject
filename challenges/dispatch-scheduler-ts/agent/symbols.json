@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Scheduler",
+    "kind": "class",
+    "path": "src/scheduler.mjs",
+    "line": 1
+  },
+  {
+    "name": "constructor",
+    "kind": "method",
+    "path": "src/scheduler.mjs",
+    "line": 2
+  },
+  {
+    "name": "add",
+    "kind": "method",
+    "path": "src/scheduler.mjs",
+    "line": 3
+  },
+  {
+    "name": "register",
+    "kind": "method",
+    "path": "src/scheduler.mjs",
+    "line": 4
+  },
+  {
+    "name": "complete",
+    "kind": "method",
+    "path": "src/scheduler.mjs",
+    "line": 5
+  },
+  {
+    "name": "ready",
+    "kind": "method",
+    "path": "src/scheduler.mjs",
+    "line": 6
+  },
+  {
+    "name": "assign",
+    "kind": "method",
+    "path": "src/scheduler.mjs",
+    "line": 7
+  },
+  {
+    "name": "dueRetries",
+    "kind": "method",
+    "path": "src/scheduler.mjs",
+    "line": 12
+  }
+]

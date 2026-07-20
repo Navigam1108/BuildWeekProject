@@ -3,6 +3,8 @@ title: "LogScope — time-range query latency"
 language: python
 level: mid
 image: challenge-py
+domain: observability
+summary: "Investigate slow log queries and maintenance work in a production event-store service."
 task: |
   PERF-2847: Query latency exceeds SLA for time-range lookups.
   LogScope times out on large time-range queries. For the production-sized
@@ -11,6 +13,33 @@ task: |
 grading:
   bench_target_ms: 200
   bench_baseline_ms: 4200
+  golden_target_pct: 50
+  missions:
+    - id: time-range
+      name: Time-range lookup
+      concepts: [ordered search, index boundary]
+      weight: 20
+      benchmark: Range-query latency
+    - id: field-filter
+      name: Field filter lookup
+      concepts: [inverted index, keyed lookup]
+      weight: 20
+      benchmark: Filtered-query throughput
+    - id: retention
+      name: Retention maintenance
+      concepts: [queue, incremental cleanup]
+      weight: 20
+      benchmark: Expired-record sweep
+    - id: top-sources
+      name: Top source aggregation
+      concepts: [counting, bounded ranking]
+      weight: 20
+      benchmark: Source summary latency
+    - id: dedupe
+      name: Duplicate suppression
+      concepts: [hashing, bounded window]
+      weight: 20
+      benchmark: Ingest throughput
 agent:
   refusal_topics:
     - binary search

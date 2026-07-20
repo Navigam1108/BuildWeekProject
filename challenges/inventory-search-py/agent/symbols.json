@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Product",
+    "kind": "class",
+    "path": "catalog/service.py",
+    "line": 5
+  },
+  {
+    "name": "CatalogService",
+    "kind": "class",
+    "path": "catalog/service.py",
+    "line": 13
+  },
+  {
+    "name": "__init__",
+    "kind": "function",
+    "path": "catalog/service.py",
+    "line": 14
+  },
+  {
+    "name": "by_sku",
+    "kind": "function",
+    "path": "catalog/service.py",
+    "line": 17
+  },
+  {
+    "name": "prefix",
+    "kind": "function",
+    "path": "catalog/service.py",
+    "line": 20
+  },
+  {
+    "name": "facets",
+    "kind": "function",
+    "path": "catalog/service.py",
+    "line": 23
+  },
+  {
+    "name": "available",
+    "kind": "function",
+    "path": "catalog/service.py",
+    "line": 30
+  },
+  {
+    "name": "page",
+    "kind": "function",
+    "path": "catalog/service.py",
+    "line": 33
+  },
+  {
+    "name": "CatalogTests",
+    "kind": "class",
+    "path": "tests/test_service.py",
+    "line": 5
+  },
+  {
+    "name": "setUp",
+    "kind": "function",
+    "path": "tests/test_service.py",
+    "line": 6
+  },
+  {
+    "name": "test_lookup_and_prefix",
+    "kind": "function",
+    "path": "tests/test_service.py",
+    "line": 9
+  },
+  {
+    "name": "test_availability",
+    "kind": "function",
+    "path": "tests/test_service.py",
+    "line": 13
+  }
+]

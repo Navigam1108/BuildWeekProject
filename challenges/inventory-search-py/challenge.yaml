@@ -1,0 +1,21 @@
+slug: inventory-search-py
+title: "Northstar Catalog — inventory search latency"
+language: python
+level: junior
+image: challenge-py
+domain: commerce
+summary: "Improve product lookup and browse operations in a multi-warehouse inventory service."
+task: |
+  CAT-209: Search and availability calls are slowing down as the catalog grows.
+  Preserve the CatalogService API while improving its lookup and browse paths.
+  Run `make test` and `make bench` before submitting.
+grading:
+  bench_target_ms: 500
+  bench_baseline_ms: 6000
+  golden_target_pct: 50
+  missions:
+    - { id: sku, name: SKU lookup, concepts: [hashing, keyed lookup], weight: 20, benchmark: Point lookup }
+    - { id: prefix, name: Prefix browsing, concepts: [trie, ordered search], weight: 20, benchmark: Autocomplete }
+    - { id: facets, name: Facet counts, concepts: [counting, inverted index], weight: 20, benchmark: Browse filtering }
+    - { id: availability, name: Availability join, concepts: [hash join, memoization], weight: 20, benchmark: Stock enrichment }
+    - { id: pagination, name: Result pagination, concepts: [cursor, bounded slice], weight: 20, benchmark: Deep browse }

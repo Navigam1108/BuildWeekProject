@@ -1,0 +1,3 @@
+import { Router } from "../src/router.mjs";
+const routes = Array.from({ length: 10_000 }, (_, i) => ({ id: `r${i}`, prefix: `/service/${i}`, middleware: ["auth", "trace"], backends: [{ id: "a", weight: 3 }, { id: "b", weight: 1 }] })); const policies = [{ tenant: "acme", routes: routes.map(route => route.id) }]; const router = new Router(routes, policies);
+const start = performance.now(); for (let i = 0; i < 30_000; i++) { const route = router.cached(`/service/${i % 10_000}/orders`); router.middleware(route); router.authorized("acme", route); router.backend(route, i); } console.log(`candidate_ms=${(performance.now() - start).toFixed(2)}`);

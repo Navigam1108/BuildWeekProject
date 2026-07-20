@@ -3,6 +3,8 @@ title: "PayFix — nightly transaction reconciliation"
 language: python
 level: junior
 image: challenge-py
+domain: payments
+summary: "Repair reconciliation throughput and exception handling in a nightly payments workflow."
 task: |
   FIN-918: Nightly reconciliation is too slow on the production-sized
   transaction export. Reconcile payments and ledger entries without changing
@@ -10,6 +12,33 @@ task: |
 grading:
   bench_target_ms: 1000
   bench_baseline_ms: 60000
+  golden_target_pct: 50
+  missions:
+    - id: matching
+      name: Ledger matching
+      concepts: [keyed lookup, composite key]
+      weight: 20
+      benchmark: Reconciliation latency
+    - id: duplicates
+      name: Duplicate grouping
+      concepts: [hashing, grouping]
+      weight: 20
+      benchmark: Duplicate scan
+    - id: currency
+      name: Currency reference lookup
+      concepts: [memoization, keyed lookup]
+      weight: 20
+      benchmark: Conversion enrichment
+    - id: validation
+      name: Batch validation
+      concepts: [batching, set membership]
+      weight: 20
+      benchmark: Validation throughput
+    - id: exceptions
+      name: Exception prioritization
+      concepts: [priority queue, bounded collection]
+      weight: 20
+      benchmark: Exception queue latency
 agent:
   refusal_topics:
     - hashmap

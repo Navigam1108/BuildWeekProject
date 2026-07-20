@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Router",
+    "kind": "class",
+    "path": "src/router.mjs",
+    "line": 1
+  },
+  {
+    "name": "constructor",
+    "kind": "method",
+    "path": "src/router.mjs",
+    "line": 2
+  },
+  {
+    "name": "resolve",
+    "kind": "method",
+    "path": "src/router.mjs",
+    "line": 3
+  },
+  {
+    "name": "middleware",
+    "kind": "method",
+    "path": "src/router.mjs",
+    "line": 4
+  },
+  {
+    "name": "authorized",
+    "kind": "method",
+    "path": "src/router.mjs",
+    "line": 5
+  },
+  {
+    "name": "backend",
+    "kind": "method",
+    "path": "src/router.mjs",
+    "line": 6
+  },
+  {
+    "name": "cached",
+    "kind": "method",
+    "path": "src/router.mjs",
+    "line": 7
+  }
+]

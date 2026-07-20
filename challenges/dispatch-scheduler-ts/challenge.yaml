@@ -1,0 +1,21 @@
+slug: dispatch-scheduler-ts
+title: "Dispatch — dependency-aware job scheduling"
+language: typescript
+level: mid
+image: challenge-ts
+domain: workflow infrastructure
+summary: "Improve ready-job selection and worker dispatch in a production job scheduler."
+task: |
+  OPS-761: Dispatch falls behind when a workflow fan-out completes. Preserve the
+  Scheduler API while improving ready-job discovery, dependency release, worker
+  choice, retry timing, and calendar scans. Run `make test` and `make bench`.
+grading:
+  bench_target_ms: 400
+  bench_baseline_ms: 5000
+  golden_target_pct: 50
+  missions:
+    - { id: ready, name: Ready queue discovery, concepts: [queue, dependency count], weight: 20, benchmark: Ready scan }
+    - { id: release, name: Dependency release, concepts: [reverse graph, adjacency list], weight: 20, benchmark: Completion fan-out }
+    - { id: workers, name: Worker selection, concepts: [heap, priority queue], weight: 20, benchmark: Assignment latency }
+    - { id: retries, name: Retry timing, concepts: [min heap, timer queue], weight: 20, benchmark: Due retry scan }
+    - { id: calendar, name: Calendar scanning, concepts: [ordered search, interval index], weight: 20, benchmark: Schedule query }

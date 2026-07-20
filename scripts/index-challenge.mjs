@@ -11,7 +11,7 @@ function walk(dir) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const file = path.join(dir, entry.name);
     if (entry.isDirectory()) walk(file);
-    if (!entry.isFile() || !/\.(py|ts)$/.test(entry.name)) continue;
+    if (!entry.isFile() || !/\.(py|ts|mjs)$/.test(entry.name)) continue;
     const relative = path.relative(repo, file).replaceAll(path.sep, "/");
     const lines = fs.readFileSync(file, "utf8").split(/\r?\n/);
     lines.forEach((line, index) => {

@@ -1,0 +1,45 @@
+diff --git a/feed/builder.py b/feed/builder.py
+index 86de552..3391ee6 100644
+--- a/feed/builder.py
++++ b/feed/builder.py
+@@ -1,4 +1,5 @@
+ from dataclasses import dataclass
++import heapq
+ 
+ 
+ @dataclass(frozen=True)
+@@ -10,24 +11,22 @@ class Item:
+ 
+ class FeedBuilder:
+     def __init__(self, affinity: list[tuple[str, float]]) -> None:
+-        self.affinity = affinity
+-        self.refreshes: list[str] = []
++        self.affinity = dict(affinity)
++        self.refreshes: set[str] = set()
+ 
+     def build(self, sources: list[list[Item]], seen: list[str], limit: int = 20) -> list[Item]:
+-        merged = [item for source in sources for item in source]
+-        unique = [item for index, item in enumerate(merged) if item.item_id not in [other.item_id for other in merged[:index]]]
+-        eligible = [item for item in unique if item.item_id not in seen]
+-        ranked = sorted(eligible, key=lambda item: item.score * self.weight_for(item.topic), reverse=True)
+-        return ranked[:limit]
++        seen_ids, unique = set(seen), {}
++        for source in sources:
++            for item in source:
++                if item.item_id not in seen_ids:
++                    unique.setdefault(item.item_id, item)
++        return heapq.nlargest(limit, unique.values(), key=lambda item: item.score * self.affinity.get(item.topic, 1.0))
+ 
+     def weight_for(self, topic: str) -> float:
+-        for name, weight in self.affinity:
+-            if name == topic:
+-                return weight
+-        return 1.0
++        return self.affinity.get(topic, 1.0)
+ 
+     def refresh(self, user_id: str) -> bool:
+         if user_id in self.refreshes:
+             return False
+-        self.refreshes.append(user_id)
++        self.refreshes.add(user_id)
+         return True

@@ -9,8 +9,21 @@ export type ChallengeConfig = {
   language: "python" | "typescript";
   level: "junior" | "mid";
   image: string;
+  domain?: string;
+  summary?: string;
   task: string;
-  grading?: { bench_target_ms?: number; bench_baseline_ms?: number };
+  grading?: {
+    bench_target_ms?: number;
+    bench_baseline_ms?: number;
+    golden_target_pct?: number;
+    missions?: Array<{
+      id: string;
+      name: string;
+      concepts: string[];
+      weight: number;
+      benchmark: string;
+    }>;
+  };
   agent?: { refusal_topics?: string[] };
 };
 
