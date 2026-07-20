@@ -1,0 +1,16 @@
+slug: payfix-py
+title: "PayFix — nightly transaction reconciliation"
+language: python
+level: junior
+image: challenge-py
+task: |
+  FIN-918: Nightly reconciliation is too slow on the production-sized
+  transaction export. Reconcile payments and ledger entries without changing
+  the public API. Run `make test` and `make bench` before submitting.
+grading:
+  bench_target_ms: 1000
+  bench_baseline_ms: 60000
+agent:
+  refusal_topics:
+    - hashmap
+    - "what algorithm should I use"

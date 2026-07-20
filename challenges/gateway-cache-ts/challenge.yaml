@@ -1,0 +1,17 @@
+slug: gateway-cache-ts
+title: "Gateway — bounded response cache"
+language: typescript
+level: mid
+image: challenge-ts
+task: |
+  API-602: The gateway process grows continuously during a replay load and
+  eventually OOMs. Keep the response cache bounded without changing its public
+  get/set API. Run `make test` and `make bench` before submitting.
+grading:
+  bench_target_ms: 200
+  bench_baseline_ms: 10000
+agent:
+  refusal_topics:
+    - LRU
+    - eviction
+    - "how should I fix the cache"

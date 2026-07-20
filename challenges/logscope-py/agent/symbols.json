@@ -1,0 +1,6 @@
+[
+  {"name":"QueryEngine","kind":"class","path":"logscope/query_engine.py","line":8},
+  {"name":"query_logs_by_time_range","kind":"method","path":"logscope/query_engine.py","line":14,"scope":"QueryEngine"},
+  {"name":"LogRecord","kind":"class","path":"logscope/query_engine.py","line":4},
+  {"name":"parse_line","kind":"function","path":"logscope/ingestion.py","line":4}
+]

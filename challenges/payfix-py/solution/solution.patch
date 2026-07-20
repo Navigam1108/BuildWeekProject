@@ -1,0 +1,16 @@
+diff --git a/payfix/reconcile.py b/payfix/reconcile.py
+--- a/payfix/reconcile.py
++++ b/payfix/reconcile.py
+@@ -16,9 +16,8 @@ def reconcile(payments: list[Payment], ledger: list[LedgerEntry]) -> list[Payment]:
+ def reconcile(payments: list[Payment], ledger: list[LedgerEntry]) -> list[Payment]:
+     """Return payments whose reference and amount match a ledger entry."""
++    by_reference = {(entry.reference, entry.cents) for entry in ledger}
+     matched = []
+     for payment in payments:
+-        for entry in ledger:
+-            if payment.reference == entry.reference and payment.cents == entry.cents:
+-                matched.append(payment)
+-                break
++        if (payment.reference, payment.cents) in by_reference:
++            matched.append(payment)
+     return matched

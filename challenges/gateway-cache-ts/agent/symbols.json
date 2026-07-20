@@ -1,0 +1,1 @@
+[{"name":"ResponseCache","kind":"class","path":"src/response-cache.ts","line":3},{"name":"get","kind":"method","path":"src/response-cache.ts","line":6,"scope":"ResponseCache"},{"name":"set","kind":"method","path":"src/response-cache.ts","line":10,"scope":"ResponseCache"}]

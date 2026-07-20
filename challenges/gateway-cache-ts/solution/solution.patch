@@ -1,0 +1,22 @@
+diff --git a/src/response-cache.ts b/src/response-cache.ts
+--- a/src/response-cache.ts
++++ b/src/response-cache.ts
+@@ -1,17 +1,22 @@
+ export type Response = { status: number; body: string };
+ 
+ export class ResponseCache {
++  private readonly maxEntries = 5000;
+   private entries = new Map<string, Response>();
+ 
+   get(key: string): Response | undefined {
+-    return this.entries.get(key);
++    const value = this.entries.get(key);
++    if (value) { this.entries.delete(key); this.entries.set(key, value); }
++    return value;
+   }
+ 
+   set(key: string, value: Response): void {
++    this.entries.delete(key);
++    if (this.entries.size >= this.maxEntries) this.entries.delete(this.entries.keys().next().value!);
+     this.entries.set(key, value);
+   }

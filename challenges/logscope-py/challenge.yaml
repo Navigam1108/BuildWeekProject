@@ -1,0 +1,18 @@
+slug: logscope-py
+title: "LogScope — time-range query latency"
+language: python
+level: mid
+image: challenge-py
+task: |
+  PERF-2847: Query latency exceeds SLA for time-range lookups.
+  LogScope times out on large time-range queries. For the production-sized
+  dataset, p99 is ~4.2s; the SLA is 200ms. Investigate and fix. Do not change
+  the public API. Run `make bench` to measure, `make test` to verify.
+grading:
+  bench_target_ms: 200
+  bench_baseline_ms: 4200
+agent:
+  refusal_topics:
+    - binary search
+    - bisect
+    - "which function is slow"
