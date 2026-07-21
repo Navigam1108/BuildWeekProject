@@ -1,24 +1,67 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { FormEvent, use, useCallback, useEffect, useState } from "react";
+import Link from "next/link"
+import { use, useCallback, useEffect, useState } from "react"
 
-type State = { title: string; task_md: string; status: string; agent_enabled: boolean; time_remaining_ms: number; ide_url: string | null; ide_password: string | null };
-type Message = { id: number; role: string; content: string };
+type State = { title: string; task_md: string; status: string; ide_url: string | null; ide_password: string | null }
 
 export default function CandidatePage({ params }: { params: Promise<{ token: string }> }) {
-  const { token } = use(params);
-  const [state, setState] = useState<State | null>(null);
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [draft, setDraft] = useState("");
-  const [tab, setTab] = useState<"task" | "scout">("task");
-  const [busy, setBusy] = useState(false);
-  const [notice, setNotice] = useState("");
-  const load = useCallback(async () => { const response = await fetch(`/api/candidate/${token}`, { cache: "no-store" }); if (response.ok) setState(await response.json()); const transcript = await fetch(`/api/candidate/${token}/transcript`, { cache: "no-store" }); if (transcript.ok) setMessages(await transcript.json()); }, [token]);
-  useEffect(() => { void load(); const timer = setInterval(() => void load(), 5000); return () => clearInterval(timer); }, [load]);
-  async function ask(event: FormEvent) { event.preventDefault(); if (!draft.trim() || busy) return; const message = draft.trim(); setDraft(""); setBusy(true); setMessages((old) => [...old, { id: Date.now(), role: "candidate", content: message }]); const response = await fetch(`/api/candidate/${token}/chat`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ message }) }); if (!response.ok) { const data = await response.json().catch(() => ({})); setNotice(data.error || "Scout is unavailable"); setBusy(false); return; } const reader = response.body?.getReader(); const decoder = new TextDecoder(); let answer = ""; const id = Date.now() + 1; setMessages((old) => [...old, { id, role: "scout", content: "" }]); while (reader) { const chunk = await reader.read(); if (chunk.done) break; answer += decoder.decode(chunk.value, { stream: true }); setMessages((old) => old.map((item) => item.id === id ? { ...item, content: answer } : item)); } setBusy(false); void load(); }
-  async function submit() { if (!confirm("Submit your current work for grading? You can keep working afterward.")) return; setNotice("Grading in progress…"); const response = await fetch(`/api/candidate/${token}/submit`, { method: "POST" }); const data = await response.json(); setNotice(response.ok ? "Submitted. You can keep working and resubmit." : data.error || "Grading failed"); }
-  const minutes = state ? Math.floor(state.time_remaining_ms / 60_000) : 0; const seconds = state ? Math.floor((state.time_remaining_ms % 60_000) / 1000) : 0;
-  if (!state) return <main className="shell"><div className="muted">Loading workspace…</div></main>;
-  return <main className="workspace"><header className="workspace-bar"><div><div className="brand">Scout<span>.</span></div><div className="muted">{state.title}</div></div><div className="actions" style={{ marginTop: 0 }}><span className={`pill ${state.agent_enabled ? "live" : "off"}`}>{state.agent_enabled ? "Scout available" : "Scout disabled"}</span><span className="pill">{minutes}:{String(seconds).padStart(2, "0")}</span><button className="button primary" onClick={submit}>Submit</button><Link href="/" className="button">Exit</Link></div></header><div className="workspace-main"><section className="ide-frame">{state.ide_url ? <iframe title="Candidate IDE" src={state.ide_url} style={{ width: "100%", height: "100%", minHeight: "calc(100vh - 122px)", border: 0 }} /> : <div className="ide-placeholder"><div className="eyebrow">Workspace</div><h2>Code-server will appear here</h2><p className="muted">The session container is not connected yet. The challenge repository is still available to the grader.</p><div className="code">IDE password: {state.ide_password || "not available"}</div></div>}</section><aside className="side-panel"><div className="actions" style={{ marginTop: 0 }}><button className={`button ${tab === "task" ? "primary" : ""}`} onClick={() => setTab("task")}>Task</button><button className={`button ${tab === "scout" ? "primary" : ""}`} onClick={() => setTab("scout")}>Scout</button></div>{tab === "task" ? <section><h2>Ticket</h2><div className="notice" style={{ whiteSpace: "pre-wrap" }}>{state.task_md}</div><h3 style={{ marginTop: 24 }}>How to run</h3><div className="code">make test{`\n`}make bench</div></section> : <section><p className="muted">Scout conversations are visible to your interviewer.</p><div className="chat">{messages.map((message) => <div key={message.id} className={`message ${message.role}`}><div className="message-role">{message.role}</div><div>{message.content || "…"}</div></div>)}</div><form className="chat-form" onSubmit={ask}><textarea disabled={!state.agent_enabled || busy} value={draft} onChange={(event) => setDraft(event.target.value)} placeholder={state.agent_enabled ? "Ask where something lives or what it does…" : "Scout is disabled by the interviewer"} /><button className="button primary" disabled={!state.agent_enabled || busy} type="submit">{busy ? "Scout is thinking…" : "Ask Scout"}</button></form></section>}{notice && <div className="notice" style={{ marginTop: 16 }}>{notice}</div>}</aside></div></main>;
+  const { token } = use(params)
+  const [state, setState] = useState<State | null>(null)
+  const [tab, setTab] = useState<"task" | "guide">("task")
+  const [notice, setNotice] = useState("")
+
+  const load = useCallback(async () => {
+    const response = await fetch(`/api/candidate/${token}`, { cache: "no-store" })
+    if (response.ok) setState(await response.json())
+  }, [token])
+
+  useEffect(() => {
+    void load()
+    const timer = setInterval(() => void load(), 5000)
+    return () => clearInterval(timer)
+  }, [load])
+
+  async function submit() {
+    if (!confirm("Submit your current work for grading? You can keep working afterward.")) return
+    setNotice("Grading in progress...")
+    const response = await fetch(`/api/candidate/${token}/submit`, { method: "POST" })
+    const data = await response.json()
+    setNotice(response.ok ? "Submitted. You can keep working and resubmit." : data.error || "Grading failed")
+  }
+
+  if (!state) return <main className="shell"><div className="muted">Loading workspace...</div></main>
+
+  return <main className="workspace">
+    <header className="workspace-bar">
+      <div><div className="brand">Scout<span>.</span></div><div className="muted">{state.title}</div></div>
+      <div className="actions" style={{ marginTop: 0 }}>
+        <span className="pill coming-soon">AI guide coming soon</span>
+        <button className="button primary" onClick={submit}>Submit</button>
+        <Link href="/" className="button">Exit</Link>
+      </div>
+    </header>
+    <div className="workspace-main">
+      <section className="ide-frame">
+        {state.ide_url ? <iframe title="Candidate IDE" src={state.ide_url} style={{ width: "100%", height: "100%", minHeight: "calc(100vh - 122px)", border: 0 }} /> : <div className="ide-placeholder"><div className="eyebrow">Workspace</div><h2>Code-server will appear here</h2><p className="muted">The session container is not connected yet. The challenge repository is still available to the grader.</p><div className="code">IDE password: {state.ide_password || "not available"}</div></div>}
+      </section>
+      <aside className="side-panel">
+        <div className="actions" style={{ marginTop: 0 }}>
+          <button className={`button ${tab === "task" ? "primary" : ""}`} onClick={() => setTab("task")}>Task</button>
+          <button className={`button ${tab === "guide" ? "primary" : ""}`} onClick={() => setTab("guide")}>AI guide</button>
+        </div>
+        {tab === "task" ? <section><h2>Ticket</h2><div className="notice" style={{ whiteSpace: "pre-wrap" }}>{state.task_md}</div><h3 style={{ marginTop: 24 }}>How to run</h3><div className="code">make test{`\n`}make bench</div></section> : <section className="coming-soon-card">
+          <div className="coming-soon-mark" aria-hidden="true">+</div>
+          <div className="eyebrow">Coming soon</div>
+          <h2>AI interview guide</h2>
+          <p className="muted">A structured, non-solution guide is being prepared for future interviews. This demo keeps the focus on your repository investigation and measurable engineering work.</p>
+          <div className="coming-soon-list">
+            <div><strong>Repository orientation</strong><span>Find the right code without giving away an implementation.</span></div>
+            <div><strong>Interview checkpoints</strong><span>Keep the conversation focused on evidence, trade-offs, and progress.</span></div>
+          </div>
+        </section>}
+        {notice && <div className="notice" style={{ marginTop: 16 }}>{notice}</div>}
+      </aside>
+    </div>
+  </main>
 }

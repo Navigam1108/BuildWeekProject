@@ -8,8 +8,12 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
+    "images:build": "node scripts/build-images.mjs",
+    "verify": "npm run typecheck && npm run lint && npm run build && node tests/test_grading.mjs && npm run variant-test && npm run test:public-host",
     "index-challenge": "node scripts/index-challenge.mjs",
-    "guardrails": "node scripts/test-guardrails.mjs"
+    "guardrails": "node scripts/test-guardrails.mjs",
+    "test:public-host": "node --no-warnings --experimental-strip-types tests/test_public_host.mjs",
+    "variant-test": "node scripts/test_variants.mjs"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^1.2.12",

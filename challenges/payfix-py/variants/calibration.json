@@ -1,0 +1,84 @@
+{
+  "slug": "payfix-py",
+  "generated_at": "2026-07-21T17:14:24.874Z",
+  "records": [
+    {
+      "seed": 101,
+      "family": "skewed",
+      "candidate": {
+        "ok": true,
+        "metrics": {
+          "matching": 204.79,
+          "duplicates": 1017.58,
+          "currency": 17.03,
+          "validation": 7.24,
+          "exceptions": 57.49
+        },
+        "output": "matching_ms=204.79 duplicates_ms=1017.58 currency_ms=17.03 validation_ms=7.24 exceptions_ms=57.49"
+      },
+      "golden": {
+        "ok": true,
+        "metrics": {
+          "matching": 2.22,
+          "duplicates": 0.39,
+          "currency": 0.57,
+          "validation": 0.21,
+          "exceptions": 24.36
+        },
+        "output": "matching_ms=2.22 duplicates_ms=0.39 currency_ms=0.57 validation_ms=0.21 exceptions_ms=24.36"
+      }
+    },
+    {
+      "seed": 202,
+      "family": "burst",
+      "candidate": {
+        "ok": true,
+        "metrics": {
+          "matching": 274.86,
+          "duplicates": 1243.82,
+          "currency": 18.24,
+          "validation": 7.88,
+          "exceptions": 48.3
+        },
+        "output": "matching_ms=274.86 duplicates_ms=1243.82 currency_ms=18.24 validation_ms=7.88 exceptions_ms=48.30"
+      },
+      "golden": {
+        "ok": true,
+        "metrics": {
+          "matching": 2.49,
+          "duplicates": 0.48,
+          "currency": 1.98,
+          "validation": 0.28,
+          "exceptions": 19.64
+        },
+        "output": "matching_ms=2.49 duplicates_ms=0.48 currency_ms=1.98 validation_ms=0.28 exceptions_ms=19.64"
+      }
+    },
+    {
+      "seed": 303,
+      "family": "steady",
+      "candidate": {
+        "ok": true,
+        "metrics": {
+          "matching": 231.26,
+          "duplicates": 1067.48,
+          "currency": 16.03,
+          "validation": 7.62,
+          "exceptions": 20.01
+        },
+        "output": "matching_ms=231.26 duplicates_ms=1067.48 currency_ms=16.03 validation_ms=7.62 exceptions_ms=20.01"
+      },
+      "golden": {
+        "ok": true,
+        "metrics": {
+          "matching": 1.37,
+          "duplicates": 0.49,
+          "currency": 0.61,
+          "validation": 0.22,
+          "exceptions": 9.16
+        },
+        "output": "matching_ms=1.37 duplicates_ms=0.49 currency_ms=0.61 validation_ms=0.22 exceptions_ms=9.16"
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "families": [
+    { "id": "steady", "label": "steady workflow", "ticket_hint": "steady workflow arrivals", "count_multiplier": 1.0, "index_offset": 0, "hotspot_mod": 0, "burst_repeats": 1 },
+    { "id": "burst", "label": "fan-out burst", "ticket_hint": "a fan-out burst after a parent completes", "count_multiplier": 1.12, "index_offset": 37, "hotspot_mod": 7, "burst_repeats": 2 },
+    { "id": "skewed", "label": "worker skew", "ticket_hint": "a workflow skewed toward a small worker pool", "count_multiplier": 0.92, "index_offset": 113, "hotspot_mod": 11, "burst_repeats": 3 }
+  ],
+  "calibration": { "representative_seeds": [101, 202, 303], "notes": "Record each mission's candidate and golden metrics for every seed on the deployment host." }
+}

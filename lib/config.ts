@@ -5,6 +5,14 @@ function intEnv(value: string | undefined, fallback: number) {
   return Number.isFinite(parsed) ? parsed : fallback;
 }
 
+function hostnameFrom(value: string) {
+  try {
+    return new URL(value.includes("://") ? value : `http://${value}`).hostname;
+  } catch {
+    return value;
+  }
+}
+
 export const config = {
   adminPassword: process.env.ADMIN_PASSWORD || "demo-password",
   agentProvider: process.env.AGENT_PROVIDER || "local",
@@ -12,7 +20,7 @@ export const config = {
   localLlmBaseUrl: process.env.LOCAL_LLM_BASE_URL || "http://127.0.0.1:11434/v1",
   localLlmModel: process.env.LOCAL_LLM_MODEL || "qwen2.5-coder:7b",
   dataDir: path.resolve(process.env.DATA_DIR || ".data"),
-  publicHost: process.env.PUBLIC_HOST || "localhost:3000",
+  publicHost: process.env.PUBLIC_HOST || "localhost",
   sessionPortStart: intEnv(process.env.SESSION_PORT_RANGE?.split("-")[0], 40000),
   sessionPortEnd: intEnv(process.env.SESSION_PORT_RANGE?.split("-")[1], 40100),
   dockerImagePy: process.env.DOCKER_IMAGE_PY || "challenge-py",
@@ -26,3 +34,7 @@ export const paths = {
   sessions: path.join(config.dataDir, "sessions"),
   challenges: path.join(process.cwd(), "challenges")
 };
+
+export function publicHostname() {
+  return hostnameFrom(config.publicHost);
+}

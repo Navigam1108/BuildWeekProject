@@ -1,4 +1,4 @@
-import { CacheSeams } from "./cache-seams"
+import { CacheSeams } from "./cache-seams.ts"
 
 export type Response = { status: number; body: string; tags?: string[]; ttlMs?: number }
 

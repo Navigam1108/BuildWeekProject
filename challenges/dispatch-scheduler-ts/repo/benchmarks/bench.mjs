@@ -1,4 +1,11 @@
 import { Scheduler } from "../src/scheduler.mjs"
+import fs from "node:fs"
+
+const variant = fs.existsSync(new URL("./variant.json", import.meta.url))
+  ? JSON.parse(fs.readFileSync(new URL("./variant.json", import.meta.url), "utf8")).fixture
+  : { count_multiplier: 1, index_offset: 0, hotspot_mod: 0, burst_repeats: 1 }
+const jobCount = Math.round(12_000 * variant.count_multiplier)
+const workerCount = Math.round(512 * variant.count_multiplier)
 
 const measure = work => {
   const start = performance.now()
@@ -6,23 +13,23 @@ const measure = work => {
   return performance.now() - start
 }
 
-const jobs = Array.from({ length: 12_000 }, (_, index) => ({
-  id: `job-${index}`,
-  dependencies: index % 3 ? [`job-${index - (index % 3)}`] : [],
+const jobs = Array.from({ length: jobCount }, (_, index) => ({
+  id: `job-${index + variant.index_offset}`,
+  dependencies: index % (3 + variant.hotspot_mod) ? [`job-${index - (index % (3 + variant.hotspot_mod)) + variant.index_offset}`] : [],
   priority: index % 31,
   retryAt: index % 4_000,
   running: false,
 }))
 
 const scheduler = new Scheduler(jobs)
-for (let index = 0; index < 512; index += 1) scheduler.register({ id: `worker-${index}`, busy: false, load: index % 7 })
+for (let index = 0; index < workerCount; index += 1) scheduler.register({ id: `worker-${index}`, busy: false, load: index % 7 })
 
 const ready = measure(() => {
-  for (let index = 0; index < 2_000; index += 1) scheduler.ready(3_999)
+  for (let index = 0; index < 2_000 * variant.burst_repeats; index += 1) scheduler.ready(3_999 + variant.index_offset)
 })
 
 const release = measure(() => {
-  for (let index = 0; index < 4_000; index += 3) scheduler.complete(`job-${index}`)
+  for (let index = 0; index < 4_000 * variant.count_multiplier; index += 3) scheduler.complete(`job-${index + variant.index_offset}`)
   scheduler.ready(3_999)
 })
 

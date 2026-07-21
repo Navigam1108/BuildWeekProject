@@ -1,11 +1,13 @@
 import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
+import { randomInt } from "node:crypto";
 import Docker from "dockerode";
 import { nanoid } from "nanoid";
-import { config, paths } from "./config";
+import { config, paths, publicHostname } from "./config";
 import { challengeRoot, getChallenge } from "./challenges";
 import { getDb, getSession, type SessionRow } from "./db";
+import { writeSessionVariant } from "./variants";
 
 const docker = new Docker(process.platform === "win32" ? {} : { socketPath: "/var/run/docker.sock" });
 
@@ -21,21 +23,24 @@ async function nextPort() {
   throw new Error("No free interview ports available");
 }
 
-export async function createSession(input: { challengeSlug: string; candidateName: string; durationMin?: number; candidateOrigin?: string }) {
+export async function createSession(input: { challengeSlug: string; candidateName: string; durationMin?: number; candidateOrigin?: string; variantSeed?: number }) {
   const challenge = getChallenge(input.challengeSlug);
   if (!challenge) throw new Error("Challenge not found");
   const id = nanoid(12);
   const token = nanoid(21);
   const idePassword = token;
+  const variantSeed = input.variantSeed ?? randomInt(1, 2_147_483_646);
   const repoPath = path.join(paths.sessions, id, "repo");
-  const durationMin = Math.max(5, Math.min(240, input.durationMin || 60));
+  const durationMin = 0;
   const db = getDb();
-  db.prepare(`INSERT INTO sessions (id, token, challenge_slug, candidate_name, status, agent_enabled, ide_password, repo_path, created_at, duration_min)
-    VALUES (?, ?, ?, ?, 'created', 1, ?, ?, ?, ?)`).run(id, token, challenge.slug, input.candidateName.trim() || "Candidate", idePassword, repoPath, now(), durationMin);
+  db.prepare(`INSERT INTO sessions (id, token, challenge_slug, candidate_name, status, agent_enabled, ide_password, repo_path, created_at, duration_min, variant_seed)
+    VALUES (?, ?, ?, ?, 'created', 1, ?, ?, ?, ?, ?)`).run(id, token, challenge.slug, input.candidateName.trim() || "Candidate", idePassword, repoPath, now(), durationMin, variantSeed);
 
   try {
     fs.mkdirSync(path.dirname(repoPath), { recursive: true });
     fs.cpSync(path.join(challengeRoot(challenge.slug), "repo"), repoPath, { recursive: true });
+    const variant = writeSessionVariant(repoPath, challenge.slug, variantSeed);
+    db.prepare("UPDATE sessions SET variant_seed = ?, variant_json = ? WHERE id = ?").run(variant.seed, JSON.stringify(variant), id);
     execFileSync("git", ["init"], { cwd: repoPath, stdio: "ignore" });
     execFileSync("git", ["add", "-A"], { cwd: repoPath, stdio: "ignore" });
     execFileSync("git", ["-c", "user.email=scout@local", "-c", "user.name=Scout", "commit", "-m", "start"], { cwd: repoPath, stdio: "ignore" });
@@ -62,7 +67,7 @@ export async function createSession(input: { challengeSlug: string; candidateNam
     // preserves a local dev-server port (for example localhost:3000) instead
     // of sending candidates to port 80.
     const candidateOrigin = (input.candidateOrigin || `http://${config.publicHost}`).replace(/\/$/, "");
-    return { id, token, candidateUrl: `${candidateOrigin}/s/${token}`, ideUrl: `http://${config.publicHost}:${idePort}`, idePassword };
+    return { id, token, candidateUrl: `${candidateOrigin}/s/${token}`, ideUrl: `http://${publicHostname()}:${idePort}`, idePassword };
   } catch (error) {
     db.prepare("UPDATE sessions SET status = 'error', ended_at = ? WHERE id = ?").run(now(), id);
     throw error;
@@ -85,16 +90,7 @@ export async function endSession(session: SessionRow) {
 export async function getSessionState(token: string) {
   const session = getDb().prepare("SELECT s.*, c.title, c.task_md FROM sessions s JOIN challenges c ON c.slug=s.challenge_slug WHERE s.token = ?").get(token) as (SessionRow & { title: string; task_md: string }) | undefined;
   if (!session) return null;
-  const expiresAt = new Date(new Date(session.created_at).getTime() + session.duration_min * 60_000);
-  const timeRemaining = Math.max(0, expiresAt.getTime() - Date.now());
-  if (timeRemaining === 0 && ["created", "active"].includes(session.status)) await endSession(session);
-  return { ...session, time_remaining_ms: timeRemaining };
+  return { ...session, elapsed_ms: Math.max(0, Date.now() - new Date(session.created_at).getTime()) };
 }
 
-export async function sweepExpiredSessions() {
-  const rows = getDb().prepare("SELECT * FROM sessions WHERE status IN ('created','active')").all() as SessionRow[];
-  for (const session of rows) {
-    const expiresAt = new Date(new Date(session.created_at).getTime() + session.duration_min * 60_000 + 10 * 60_000);
-    if (expiresAt.getTime() < Date.now()) await endSession(session);
-  }
-}
+export async function sweepExpiredSessions() {}

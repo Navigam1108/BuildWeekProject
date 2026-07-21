@@ -1,0 +1,84 @@
+{
+  "slug": "logscope-py",
+  "generated_at": "2026-07-21T17:39:12.485Z",
+  "records": [
+    {
+      "seed": 101,
+      "family": "skewed",
+      "candidate": {
+        "ok": true,
+        "metrics": {
+          "time_range": 9.28,
+          "field_filter": 41.56,
+          "retention": 0.5,
+          "top_sources": 6193.14,
+          "dedupe": 2426.34
+        },
+        "output": "time_range_ms=9.28 field_filter_ms=41.56 retention_ms=0.50 top_sources_ms=6193.14 dedupe_ms=2426.34"
+      },
+      "golden": {
+        "ok": true,
+        "metrics": {
+          "time_range": 0.04,
+          "field_filter": 0.29,
+          "retention": 0.43,
+          "top_sources": 0.01,
+          "dedupe": 1.4
+        },
+        "output": "time_range_ms=0.04 field_filter_ms=0.29 retention_ms=0.43 top_sources_ms=0.01 dedupe_ms=1.40"
+      }
+    },
+    {
+      "seed": 202,
+      "family": "burst",
+      "candidate": {
+        "ok": true,
+        "metrics": {
+          "time_range": 15.36,
+          "field_filter": 60.05,
+          "retention": 0.54,
+          "top_sources": 3406.47,
+          "dedupe": 1791.99
+        },
+        "output": "time_range_ms=15.36 field_filter_ms=60.05 retention_ms=0.54 top_sources_ms=3406.47 dedupe_ms=1791.99"
+      },
+      "golden": {
+        "ok": true,
+        "metrics": {
+          "time_range": 0.06,
+          "field_filter": 0.39,
+          "retention": 0.55,
+          "top_sources": 0.01,
+          "dedupe": 0.87
+        },
+        "output": "time_range_ms=0.06 field_filter_ms=0.39 retention_ms=0.55 top_sources_ms=0.01 dedupe_ms=0.87"
+      }
+    },
+    {
+      "seed": 303,
+      "family": "steady",
+      "candidate": {
+        "ok": true,
+        "metrics": {
+          "time_range": 12.94,
+          "field_filter": 66.71,
+          "retention": 0.77,
+          "top_sources": 1355.34,
+          "dedupe": 306.24
+        },
+        "output": "time_range_ms=12.94 field_filter_ms=66.71 retention_ms=0.77 top_sources_ms=1355.34 dedupe_ms=306.24"
+      },
+      "golden": {
+        "ok": true,
+        "metrics": {
+          "time_range": 0.06,
+          "field_filter": 0.5,
+          "retention": 0.61,
+          "top_sources": 0.01,
+          "dedupe": 0.93
+        },
+        "output": "time_range_ms=0.06 field_filter_ms=0.50 retention_ms=0.61 top_sources_ms=0.01 dedupe_ms=0.93"
+      }
+    }
+  ]
+}

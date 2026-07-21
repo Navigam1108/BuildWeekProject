@@ -1,0 +1,84 @@
+{
+  "slug": "gateway-cache-ts",
+  "generated_at": "2026-07-21T17:45:47.648Z",
+  "records": [
+    {
+      "seed": 101,
+      "family": "skewed",
+      "candidate": {
+        "ok": true,
+        "metrics": {
+          "bounded": 935.18,
+          "expiry": 100.63,
+          "headers": 100.95,
+          "coalescing": 0.78,
+          "invalidation": 4.57
+        },
+        "output": "bounded_ms=935.18 bounded_size=5000 expiry_ms=100.63 headers_ms=100.95 coalescing_ms=0.78 upstream_calls=1 invalidation_ms=4.57"
+      },
+      "golden": {
+        "ok": true,
+        "metrics": {
+          "bounded": 14.25,
+          "expiry": 3.57,
+          "headers": 36.27,
+          "coalescing": 0.4,
+          "invalidation": 0.22
+        },
+        "output": "bounded_ms=14.25 bounded_size=5000 expiry_ms=3.57 headers_ms=36.27 coalescing_ms=0.40 upstream_calls=1 invalidation_ms=0.22"
+      }
+    },
+    {
+      "seed": 202,
+      "family": "burst",
+      "candidate": {
+        "ok": true,
+        "metrics": {
+          "bounded": 1336.84,
+          "expiry": 159.64,
+          "headers": 85.11,
+          "coalescing": 0.29,
+          "invalidation": 5.44
+        },
+        "output": "bounded_ms=1336.84 bounded_size=5000 expiry_ms=159.64 headers_ms=85.11 coalescing_ms=0.29 upstream_calls=1 invalidation_ms=5.44"
+      },
+      "golden": {
+        "ok": true,
+        "metrics": {
+          "bounded": 21.19,
+          "expiry": 4.27,
+          "headers": 31.86,
+          "coalescing": 0.37,
+          "invalidation": 0.28
+        },
+        "output": "bounded_ms=21.19 bounded_size=5000 expiry_ms=4.27 headers_ms=31.86 coalescing_ms=0.37 upstream_calls=1 invalidation_ms=0.28"
+      }
+    },
+    {
+      "seed": 303,
+      "family": "steady",
+      "candidate": {
+        "ok": true,
+        "metrics": {
+          "bounded": 1202.4,
+          "expiry": 131.87,
+          "headers": 48.96,
+          "coalescing": 0.26,
+          "invalidation": 5.57
+        },
+        "output": "bounded_ms=1202.40 bounded_size=5000 expiry_ms=131.87 headers_ms=48.96 coalescing_ms=0.26 upstream_calls=1 invalidation_ms=5.57"
+      },
+      "golden": {
+        "ok": true,
+        "metrics": {
+          "bounded": 13.97,
+          "expiry": 3.62,
+          "headers": 21.63,
+          "coalescing": 0.28,
+          "invalidation": 0.28
+        },
+        "output": "bounded_ms=13.97 bounded_size=5000 expiry_ms=3.62 headers_ms=21.63 coalescing_ms=0.28 upstream_calls=1 invalidation_ms=0.28"
+      }
+    }
+  ]
+}

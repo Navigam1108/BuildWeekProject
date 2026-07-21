@@ -1,0 +1,90 @@
+{
+  "slug": "risk-router-cpp",
+  "generated_at": "2026-07-21T17:45:16.710Z",
+  "records": [
+    {
+      "seed": 101,
+      "family": "skewed",
+      "candidate": {
+        "ok": true,
+        "metrics": {
+          "node_lookup": 37.8387,
+          "rack_health": 179.901,
+          "weighted_route": 172.936,
+          "topology_snapshot": 3617.97,
+          "invalidation": 12.8805,
+          "candidate": 4021.53
+        },
+        "output": "node_lookup_ms=37.8387\r\nrack_health_ms=179.901\r\nweighted_route_ms=172.936\r\ntopology_snapshot_ms=3617.97\r\ninvalidation_ms=12.8805\r\ncandidate_ms=4021.53"
+      },
+      "golden": {
+        "ok": true,
+        "metrics": {
+          "node_lookup": 0.3234,
+          "rack_health": 17.3861,
+          "weighted_route": 0.6459,
+          "topology_snapshot": 511.13,
+          "invalidation": 0.2252,
+          "candidate": 529.71
+        },
+        "output": "node_lookup_ms=0.3234\r\nrack_health_ms=17.3861\r\nweighted_route_ms=0.6459\r\ntopology_snapshot_ms=511.13\r\ninvalidation_ms=0.2252\r\ncandidate_ms=529.71"
+      }
+    },
+    {
+      "seed": 202,
+      "family": "burst",
+      "candidate": {
+        "ok": true,
+        "metrics": {
+          "node_lookup": 14.7168,
+          "rack_health": 187.47,
+          "weighted_route": 124.365,
+          "topology_snapshot": 2691.93,
+          "invalidation": 17.0184,
+          "candidate": 3035.5
+        },
+        "output": "node_lookup_ms=14.7168\r\nrack_health_ms=187.47\r\nweighted_route_ms=124.365\r\ntopology_snapshot_ms=2691.93\r\ninvalidation_ms=17.0184\r\ncandidate_ms=3035.5"
+      },
+      "golden": {
+        "ok": true,
+        "metrics": {
+          "node_lookup": 0.2133,
+          "rack_health": 18.571,
+          "weighted_route": 0.496,
+          "topology_snapshot": 453.137,
+          "invalidation": 0.2904,
+          "candidate": 472.708
+        },
+        "output": "node_lookup_ms=0.2133\r\nrack_health_ms=18.571\r\nweighted_route_ms=0.496\r\ntopology_snapshot_ms=453.137\r\ninvalidation_ms=0.2904\r\ncandidate_ms=472.708"
+      }
+    },
+    {
+      "seed": 303,
+      "family": "steady",
+      "candidate": {
+        "ok": true,
+        "metrics": {
+          "node_lookup": 2.9535,
+          "rack_health": 151.555,
+          "weighted_route": 72.4943,
+          "topology_snapshot": 1321.86,
+          "invalidation": 16.7471,
+          "candidate": 1565.61
+        },
+        "output": "node_lookup_ms=2.9535\r\nrack_health_ms=151.555\r\nweighted_route_ms=72.4943\r\ntopology_snapshot_ms=1321.86\r\ninvalidation_ms=16.7471\r\ncandidate_ms=1565.61"
+      },
+      "golden": {
+        "ok": true,
+        "metrics": {
+          "node_lookup": 0.0867,
+          "rack_health": 15.5412,
+          "weighted_route": 0.1987,
+          "topology_snapshot": 188.131,
+          "invalidation": 0.2632,
+          "candidate": 204.221
+        },
+        "output": "node_lookup_ms=0.0867\r\nrack_health_ms=15.5412\r\nweighted_route_ms=0.1987\r\ntopology_snapshot_ms=188.131\r\ninvalidation_ms=0.2632\r\ncandidate_ms=204.221"
+      }
+    }
+  ]
+}

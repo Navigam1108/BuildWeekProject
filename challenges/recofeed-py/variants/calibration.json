@@ -1,0 +1,54 @@
+{
+  "slug": "recofeed-py",
+  "generated_at": "2026-07-21T17:17:45.570Z",
+  "records": [
+    {
+      "seed": 101,
+      "family": "skewed",
+      "candidate": {
+        "ok": false,
+        "metrics": {},
+        "output": ""
+      },
+      "golden": {
+        "ok": true,
+        "metrics": {
+          "candidate": 47.4
+        },
+        "output": "candidate_ms=47.40"
+      }
+    },
+    {
+      "seed": 202,
+      "family": "burst",
+      "candidate": {
+        "ok": false,
+        "metrics": {},
+        "output": ""
+      },
+      "golden": {
+        "ok": true,
+        "metrics": {
+          "candidate": 39.23
+        },
+        "output": "candidate_ms=39.23"
+      }
+    },
+    {
+      "seed": 303,
+      "family": "steady",
+      "candidate": {
+        "ok": false,
+        "metrics": {},
+        "output": ""
+      },
+      "golden": {
+        "ok": true,
+        "metrics": {
+          "candidate": 19.18
+        },
+        "output": "candidate_ms=19.18"
+      }
+    }
+  ]
+}

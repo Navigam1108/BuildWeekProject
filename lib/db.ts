@@ -34,6 +34,8 @@ export function getDb() {
       repo_path TEXT,
       created_at TEXT NOT NULL,
       duration_min INTEGER NOT NULL DEFAULT 60,
+      variant_seed INTEGER,
+      variant_json TEXT,
       ended_at TEXT
     );
     CREATE TABLE IF NOT EXISTS agent_messages (
@@ -52,8 +54,15 @@ export function getDb() {
       created_at TEXT NOT NULL
     );
   `);
+  ensureColumn(database, "sessions", "variant_seed", "INTEGER");
+  ensureColumn(database, "sessions", "variant_json", "TEXT");
   seedChallenges(database);
   return database;
+}
+
+function ensureColumn(db: Db, table: string, column: string, type: string) {
+  const columns = db.prepare(`PRAGMA table_info(${table})`).all() as Array<{ name: string }>;
+  if (!columns.some((item) => item.name === column)) db.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${type}`);
 }
 
 function seedChallenges(db: Db) {
@@ -89,6 +98,8 @@ export type SessionRow = {
   repo_path: string | null;
   created_at: string;
   duration_min: number;
+  variant_seed: number | null;
+  variant_json: string | null;
   ended_at: string | null;
 };
 

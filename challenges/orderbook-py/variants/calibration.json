@@ -1,0 +1,60 @@
+{
+  "slug": "orderbook-py",
+  "generated_at": "2026-07-21T17:45:50.068Z",
+  "records": [
+    {
+      "seed": 101,
+      "family": "skewed",
+      "candidate": {
+        "ok": true,
+        "metrics": {
+          "candidate": 2151.19
+        },
+        "output": "candidate_ms=2151.19 open_orders=4613"
+      },
+      "golden": {
+        "ok": true,
+        "metrics": {
+          "candidate": 57.3
+        },
+        "output": "candidate_ms=57.30 open_orders=4613"
+      }
+    },
+    {
+      "seed": 202,
+      "family": "burst",
+      "candidate": {
+        "ok": true,
+        "metrics": {
+          "candidate": 2862.87
+        },
+        "output": "candidate_ms=2862.87 open_orders=5408"
+      },
+      "golden": {
+        "ok": true,
+        "metrics": {
+          "candidate": 34.94
+        },
+        "output": "candidate_ms=34.94 open_orders=5408"
+      }
+    },
+    {
+      "seed": 303,
+      "family": "steady",
+      "candidate": {
+        "ok": true,
+        "metrics": {
+          "candidate": 2085.54
+        },
+        "output": "candidate_ms=2085.54 open_orders=5045"
+      },
+      "golden": {
+        "ok": true,
+        "metrics": {
+          "candidate": 22.68
+        },
+        "output": "candidate_ms=22.68 open_orders=5045"
+      }
+    }
+  ]
+}

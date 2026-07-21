@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "families": [
+    { "id": "steady", "label": "steady event stream", "ticket_hint": "steady event traffic across services", "count_multiplier": 1.0, "index_offset": 0, "hotspot_mod": 0, "burst_repeats": 1 },
+    { "id": "burst", "label": "burst event stream", "ticket_hint": "short bursts concentrated around a few services", "count_multiplier": 1.12, "index_offset": 37, "hotspot_mod": 7, "burst_repeats": 2 },
+    { "id": "skewed", "label": "skewed event stream", "ticket_hint": "a noisy service with repeated hot keys", "count_multiplier": 0.92, "index_offset": 113, "hotspot_mod": 11, "burst_repeats": 3 }
+  ],
+  "calibration": { "representative_seeds": [101, 202, 303], "notes": "Record each mission's candidate and golden metrics for every seed on the deployment host." }
+}

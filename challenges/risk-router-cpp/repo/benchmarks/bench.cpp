@@ -1,21 +1,37 @@
 #include "routing/router.hpp"
 
 #include <chrono>
+#include <fstream>
 #include <iostream>
+#include <string>
 
 int main() {
   routing::ShardRouter router;
-  for (int index = 0; index < 8'000; ++index) router.register_node({"node-" + std::to_string(index), "rack-" + std::to_string(index % 8), index % 5 + 1, true});
+  double multiplier = 1.0;
+  int offset = 0;
+  int hotspot = 0;
+  int burst_repeats = 1;
+  std::ifstream variant("benchmarks/variant.cfg");
+  std::string line;
+  while (std::getline(variant, line)) {
+    if (line.rfind("count_multiplier=", 0) == 0) multiplier = std::stod(line.substr(17));
+    if (line.rfind("index_offset=", 0) == 0) offset = std::stoi(line.substr(13));
+    if (line.rfind("hotspot_mod=", 0) == 0) hotspot = std::stoi(line.substr(12));
+    if (line.rfind("burst_repeats=", 0) == 0) burst_repeats = std::stoi(line.substr(14));
+  }
+  const int node_count = static_cast<int>(8'000 * multiplier);
+  const int rack_count = 8 + hotspot;
+  for (int index = 0; index < node_count; ++index) router.register_node({"node-" + std::to_string(index + offset), "rack-" + std::to_string(index % rack_count), index % 5 + 1, true});
   const auto measure = [](const auto& work) {
     const auto start = std::chrono::steady_clock::now();
     work();
     return std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - start).count();
   };
-  const auto node_lookup = measure([&] { for (int index = 0; index < 2'000; ++index) router.set_health("node-" + std::to_string(index), index % 2 == 0); });
-  const auto rack_health = measure([&] { for (int index = 0; index < 2'000; ++index) router.healthy_in_rack("rack-" + std::to_string(index % 8)); });
-  const auto weighted_route = measure([&] { for (int index = 0; index < 2'000; ++index) router.choose("tenant-" + std::to_string(index % 100), "order-" + std::to_string(index)); });
-  const auto topology_snapshot = measure([&] { for (int index = 0; index < 1'000; ++index) router.snapshot(); });
-  const auto invalidation = measure([&] { for (int index = 0; index < 800; ++index) { router.register_node({"burst-" + std::to_string(index), "rack-0", 1, true}); router.remove_node("burst-" + std::to_string(index)); } });
+  const auto node_lookup = measure([&] { for (int index = 0; index < 2'000 * burst_repeats; ++index) router.set_health("node-" + std::to_string(index % node_count + offset), index % 2 == 0); });
+  const auto rack_health = measure([&] { for (int index = 0; index < 2'000 * burst_repeats; ++index) router.healthy_in_rack("rack-" + std::to_string(index % rack_count)); });
+  const auto weighted_route = measure([&] { for (int index = 0; index < 2'000 * burst_repeats; ++index) router.choose("tenant-" + std::to_string(index % (100 + hotspot)), "order-" + std::to_string(index)); });
+  const auto topology_snapshot = measure([&] { for (int index = 0; index < 1'000 * burst_repeats; ++index) router.snapshot(); });
+  const auto invalidation = measure([&] { for (int index = 0; index < static_cast<int>(800 * multiplier); ++index) { router.register_node({"burst-" + std::to_string(index + offset), "rack-0", 1, true}); router.remove_node("burst-" + std::to_string(index + offset)); } });
   const auto total = node_lookup + rack_health + weighted_route + topology_snapshot + invalidation;
   std::cout << "node_lookup_ms=" << node_lookup << "\n";
   std::cout << "rack_health_ms=" << rack_health << "\n";

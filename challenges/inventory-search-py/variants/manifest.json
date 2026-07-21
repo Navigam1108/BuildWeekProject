@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "families": [
+    { "id": "steady", "label": "steady catalog", "ticket_hint": "steady browse traffic across warehouses", "count_multiplier": 1.0, "index_offset": 0, "hotspot_mod": 0, "burst_repeats": 1 },
+    { "id": "burst", "label": "campaign burst", "ticket_hint": "a campaign burst around a narrow category", "count_multiplier": 1.12, "index_offset": 37, "hotspot_mod": 7, "burst_repeats": 2 },
+    { "id": "skewed", "label": "warehouse skew", "ticket_hint": "a small set of warehouses dominating availability calls", "count_multiplier": 0.92, "index_offset": 113, "hotspot_mod": 11, "burst_repeats": 3 }
+  ],
+  "calibration": { "representative_seeds": [101, 202, 303], "notes": "Record each mission's candidate and golden metrics for every seed on the deployment host." }
+}

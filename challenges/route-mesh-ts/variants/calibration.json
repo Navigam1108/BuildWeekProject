@@ -1,0 +1,90 @@
+{
+  "slug": "route-mesh-ts",
+  "generated_at": "2026-07-21T17:46:06.039Z",
+  "records": [
+    {
+      "seed": 101,
+      "family": "skewed",
+      "candidate": {
+        "ok": true,
+        "metrics": {
+          "routes": 4091.08,
+          "middleware": 27.03,
+          "weighted": 1920.09,
+          "policy": 341.35,
+          "cache": 4096.87,
+          "candidate": 10476.42
+        },
+        "output": "routes_ms=4091.08\nmiddleware_ms=27.03\nweighted_ms=1920.09\npolicy_ms=341.35\ncache_ms=4096.87\ncandidate_ms=10476.42"
+      },
+      "golden": {
+        "ok": true,
+        "metrics": {
+          "routes": 3.24,
+          "middleware": 1.36,
+          "weighted": 2.84,
+          "policy": 3.78,
+          "cache": 14.17,
+          "candidate": 25.38
+        },
+        "output": "routes_ms=3.24\nmiddleware_ms=1.36\nweighted_ms=2.84\npolicy_ms=3.78\ncache_ms=14.17\ncandidate_ms=25.38"
+      }
+    },
+    {
+      "seed": 202,
+      "family": "burst",
+      "candidate": {
+        "ok": true,
+        "metrics": {
+          "routes": 2817.68,
+          "middleware": 15.74,
+          "weighted": 1082.9,
+          "policy": 217.85,
+          "cache": 3458.63,
+          "candidate": 7592.8
+        },
+        "output": "routes_ms=2817.68\nmiddleware_ms=15.74\nweighted_ms=1082.90\npolicy_ms=217.85\ncache_ms=3458.63\ncandidate_ms=7592.80"
+      },
+      "golden": {
+        "ok": true,
+        "metrics": {
+          "routes": 2.74,
+          "middleware": 1.18,
+          "weighted": 2.35,
+          "policy": 3.88,
+          "cache": 9.11,
+          "candidate": 19.25
+        },
+        "output": "routes_ms=2.74\nmiddleware_ms=1.18\nweighted_ms=2.35\npolicy_ms=3.88\ncache_ms=9.11\ncandidate_ms=19.25"
+      }
+    },
+    {
+      "seed": 303,
+      "family": "steady",
+      "candidate": {
+        "ok": true,
+        "metrics": {
+          "routes": 1314.89,
+          "middleware": 10.85,
+          "weighted": 472.25,
+          "policy": 68.79,
+          "cache": 1600.33,
+          "candidate": 3467.11
+        },
+        "output": "routes_ms=1314.89\nmiddleware_ms=10.85\nweighted_ms=472.25\npolicy_ms=68.79\ncache_ms=1600.33\ncandidate_ms=3467.11"
+      },
+      "golden": {
+        "ok": true,
+        "metrics": {
+          "routes": 3.09,
+          "middleware": 1.27,
+          "weighted": 2.69,
+          "policy": 3.85,
+          "cache": 14.71,
+          "candidate": 25.61
+        },
+        "output": "routes_ms=3.09\nmiddleware_ms=1.27\nweighted_ms=2.69\npolicy_ms=3.85\ncache_ms=14.71\ncandidate_ms=25.61"
+      }
+    }
+  ]
+}
