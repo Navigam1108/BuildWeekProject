@@ -1,16 +1,11 @@
 #pragma once
 
-#include <string>
 #include <vector>
 
-namespace routing {
+#include "routing/node.hpp"
+#include "routing/topology_cache.hpp"
 
-struct Node {
-  std::string id;
-  std::string rack;
-  int weight;
-  bool healthy;
-};
+namespace routing {
 
 class ShardRouter {
  public:
@@ -23,6 +18,7 @@ class ShardRouter {
 
  private:
   std::vector<Node> nodes_;
+  TopologyCache cache_;
 };
 
 }  // namespace routing

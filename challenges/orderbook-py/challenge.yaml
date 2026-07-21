@@ -5,6 +5,8 @@ level: mid
 image: challenge-py
 domain: financial infrastructure
 summary: "Improve the hot path of a limit-order matching service without changing its public API."
+dsa_topics: [hash map, heap, ordered map, deque, aggregation, ring buffer]
+interview_design: { repo_shape: event-driven-core, candidate_mode: partial-optimization, intentional_todos: 2 }
 task: |
   EXCH-117: Market-data bursts are causing order placement and depth snapshots to
   miss their latency budget. Improve the matching engine while preserving the

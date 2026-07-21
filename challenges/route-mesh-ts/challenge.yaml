@@ -5,6 +5,8 @@ level: mid
 image: challenge-ts
 domain: API infrastructure
 summary: "Improve route and policy resolution in a multi-tenant edge gateway."
+dsa_topics: [trie, prefix map, hash map, prefix sum, binary search, cache invalidation]
+interview_design: { repo_shape: edge-control-plane, candidate_mode: partial-optimization, intentional_todos: 2 }
 task: |
   EDGE-386: RouteMesh repeatedly scans route, middleware, and policy records on
   the request path. Keep the Router API unchanged while improving resolution,

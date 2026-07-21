@@ -5,6 +5,8 @@ level: mid
 image: challenge-ts
 domain: workflow infrastructure
 summary: "Improve ready-job selection and worker dispatch in a production job scheduler."
+dsa_topics: [graph, adjacency list, in-degree, priority queue, min heap, interval search]
+interview_design: { repo_shape: workflow-engine, candidate_mode: partial-optimization, intentional_todos: 2 }
 task: |
   OPS-761: Dispatch falls behind when a workflow fan-out completes. Preserve the
   Scheduler API while improving ready-job discovery, dependency release, worker

@@ -5,6 +5,8 @@ level: mid
 image: challenge-py
 domain: observability
 summary: "Investigate slow log queries and maintenance work in a production event-store service."
+dsa_topics: [binary search, hashing, inverted index, heap, queue, sliding window]
+interview_design: { repo_shape: distributed-service, candidate_mode: partial-optimization, intentional_todos: 2 }
 task: |
   PERF-2847: Query latency exceeds SLA for time-range lookups.
   LogScope times out on large time-range queries. For the production-sized

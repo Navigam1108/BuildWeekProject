@@ -5,6 +5,8 @@ level: mid
 image: challenge-ts
 domain: platform
 summary: "Stabilize a gateway cache and hot request path under replay traffic."
+dsa_topics: [hash map, doubly linked list, reverse index, fan-in, lazy deletion, batching]
+interview_design: { repo_shape: request-path, candidate_mode: partial-optimization, intentional_todos: 2 }
 task: |
   API-602: The gateway process grows continuously during a replay load and
   eventually OOMs. Keep the response cache bounded without changing its public

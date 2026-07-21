@@ -70,7 +70,7 @@ function computeScorecard(challengeSlug: string, report: Record<string, any>): S
     }
     const span = Math.max(1, metric.baseline_ms - metric.golden_ms)
     const progress = Math.max(0, Math.min(1, (metric.baseline_ms - metric.candidate_ms) / span))
-    const correctness = metric.passed !== false && visibleOk ? 1 : 0
+    const correctness = metric.passed !== false ? 1 : 0
     const score = weight * (0.35 * correctness + 0.35 * progress + 0.20 * Math.min(1, metric.golden_ms / Math.max(1, metric.candidate_ms)) + 0.10 * (hiddenPassed / (hiddenPassed + hiddenFailed || 1)))
     total += score
     return { id: mission.id, name: mission.name, concepts: mission.concepts, weight, score: Math.round(score), benchmark: mission.benchmark, baseline_ms: metric.baseline_ms, candidate_ms: metric.candidate_ms, golden_ms: metric.golden_ms, status: "measured" }

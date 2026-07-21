@@ -5,6 +5,8 @@ level: junior
 image: challenge-py
 domain: payments
 summary: "Repair reconciliation throughput and exception handling in a nightly payments workflow."
+dsa_topics: [hash map, composite keys, grouping, memoization, set membership, heap]
+interview_design: { repo_shape: batch-pipeline, candidate_mode: partial-optimization, intentional_todos: 2 }
 task: |
   FIN-918: Nightly reconciliation is too slow on the production-sized
   transaction export. Reconcile payments and ledger entries without changing

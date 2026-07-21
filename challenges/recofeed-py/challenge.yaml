@@ -5,6 +5,8 @@ level: mid
 image: challenge-py
 domain: consumer recommendations
 summary: "Improve a personalized feed assembler under high-fanout traffic."
+dsa_topics: [hash set, hash map, heap, top-k, cache invalidation, batching]
+interview_design: { repo_shape: fanout-service, candidate_mode: partial-optimization, intentional_todos: 2 }
 task: |
   FEED-443: The home-feed service is missing its p95 budget as audience and
   catalog sizes grow. Keep the FeedBuilder API stable while improving assembly,

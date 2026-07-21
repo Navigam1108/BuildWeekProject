@@ -5,6 +5,8 @@ level: mid
 image: challenge-cpp
 domain: financial infrastructure
 summary: "Improve a C++ allocation router used to select healthy risk-processing shards."
+dsa_topics: [hash map, secondary index, prefix sum, binary search, cache invalidation, versioning]
+interview_design: { repo_shape: low-latency-router, candidate_mode: partial-optimization, intentional_todos: 2 }
 task: |
   RISK-512: The allocation router has become a p99 bottleneck during market-open
   bursts. Preserve the ShardRouter public API while improving node lookup,

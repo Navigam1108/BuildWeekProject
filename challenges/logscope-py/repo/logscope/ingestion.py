@@ -1,4 +1,4 @@
-from .query_engine import LogRecord
+from .models import LogRecord
 
 
 def parse_line(line: str) -> LogRecord:

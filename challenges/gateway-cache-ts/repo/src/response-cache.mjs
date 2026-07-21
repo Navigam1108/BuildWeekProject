@@ -1,12 +1,17 @@
+import { CacheSeams } from "./cache-seams.mjs"
+
 export class ResponseCache {
   constructor(maxEntries = 5_000) {
     this.maxEntries = maxEntries
     this.entries = new Map()
     this.recency = []
     this.inFlight = []
+    this.seams = new CacheSeams()
   }
 
   get(key) {
+    const indexed = this.seams.read(key)
+    if (indexed !== undefined) return indexed
     const entry = this.entries.get(key)
     if (!entry || entry.expiresAt <= Date.now()) return undefined
     const position = this.recency.indexOf(key)
@@ -16,6 +21,7 @@ export class ResponseCache {
   }
 
   set(key, value) {
+    this.seams.write(key, value)
     const position = this.recency.indexOf(key)
     if (position >= 0) this.recency.splice(position, 1)
     while (this.recency.length >= this.maxEntries) this.entries.delete(this.recency.shift())
@@ -24,6 +30,8 @@ export class ResponseCache {
   }
 
   purgeExpired(now = Date.now()) {
+    const indexed = this.seams.expired(now)
+    if (indexed !== undefined) return indexed
     let removed = 0
     for (const [key, entry] of this.entries) if (entry.expiresAt <= now) {
       this.entries.delete(key)
@@ -35,6 +43,8 @@ export class ResponseCache {
   }
 
   normalizeHeaders(headers) {
+    const indexed = this.seams.headers(headers)
+    if (indexed !== undefined) return indexed
     const normalized = []
     for (const [name, value] of headers) {
       const key = name.trim().toLowerCase()
@@ -46,6 +56,8 @@ export class ResponseCache {
   }
 
   async coalesce(key, loader) {
+    const indexed = this.seams.request(key)
+    if (indexed !== undefined) return indexed
     const existing = this.inFlight.find((entry) => entry.key === key)
     if (existing) return existing.request
     const request = loader().finally(() => {
@@ -57,6 +69,8 @@ export class ResponseCache {
   }
 
   invalidateTag(tag) {
+    const indexed = this.seams.tag(tag)
+    if (indexed !== undefined) return indexed
     let removed = 0
     for (const [key, entry] of this.entries) if (entry.tags.includes(tag)) {
       this.entries.delete(key)

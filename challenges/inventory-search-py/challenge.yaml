@@ -5,6 +5,8 @@ level: junior
 image: challenge-py
 domain: commerce
 summary: "Improve product lookup and browse operations in a multi-warehouse inventory service."
+dsa_topics: [hash map, trie, binary search, inverted index, hash join, cursor pagination]
+interview_design: { repo_shape: catalog-service, candidate_mode: partial-optimization, intentional_todos: 2 }
 task: |
   CAT-209: Search and availability calls are slowing down as the catalog grows.
   Preserve the CatalogService API while improving its lookup and browse paths.

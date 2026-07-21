@@ -11,6 +11,12 @@ export type ChallengeConfig = {
   image: string;
   domain?: string;
   summary?: string;
+  dsa_topics?: string[];
+  interview_design?: {
+    repo_shape?: string;
+    candidate_mode?: string;
+    intentional_todos?: number;
+  };
   task: string;
   grading?: {
     bench_target_ms?: number;

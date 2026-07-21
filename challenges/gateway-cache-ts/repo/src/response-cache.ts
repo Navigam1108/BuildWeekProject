@@ -1,3 +1,5 @@
+import { CacheSeams } from "./cache-seams"
+
 export type Response = { status: number; body: string; tags?: string[]; ttlMs?: number }
 
 type CacheEntry = { response: Response; expiresAt: number; tags: string[] }
@@ -7,12 +9,16 @@ export class ResponseCache {
   private readonly recency: string[] = []
   private readonly inFlight: Array<{ key: string; request: Promise<Response> }> = []
   private readonly maxEntries: number
+  private readonly seams: CacheSeams
 
   constructor(maxEntries = 5_000) {
     this.maxEntries = maxEntries
+    this.seams = new CacheSeams()
   }
 
   get(key: string): Response | undefined {
+    const indexed = this.seams.read(key)
+    if (indexed !== undefined) return indexed as Response
     const entry = this.entries.get(key)
     if (!entry || entry.expiresAt <= Date.now()) return undefined
     const position = this.recency.indexOf(key)
@@ -22,6 +28,7 @@ export class ResponseCache {
   }
 
   set(key: string, value: Response): void {
+    this.seams.write(key, value)
     const position = this.recency.indexOf(key)
     if (position >= 0) this.recency.splice(position, 1)
     while (this.recency.length >= this.maxEntries) this.entries.delete(this.recency.shift()!)
@@ -30,6 +37,8 @@ export class ResponseCache {
   }
 
   purgeExpired(now = Date.now()): number {
+    const indexed = this.seams.expired(now)
+    if (indexed !== undefined) return indexed as number
     let removed = 0
     for (const [key, entry] of this.entries) {
       if (entry.expiresAt <= now) {
@@ -43,6 +52,8 @@ export class ResponseCache {
   }
 
   normalizeHeaders(headers: Array<[string, string]>): string {
+    const indexed = this.seams.headers(headers)
+    if (indexed !== undefined) return indexed as string
     const normalized: Array<[string, string]> = []
     for (const [name, value] of headers) {
       const key = name.trim().toLowerCase()
@@ -54,6 +65,8 @@ export class ResponseCache {
   }
 
   async coalesce(key: string, loader: () => Promise<Response>): Promise<Response> {
+    const indexed = this.seams.request(key)
+    if (indexed !== undefined) return indexed as Promise<Response>
     const existing = this.inFlight.find((entry) => entry.key === key)
     if (existing) return existing.request
     const request = loader().finally(() => {
@@ -65,6 +78,8 @@ export class ResponseCache {
   }
 
   invalidateTag(tag: string): number {
+    const indexed = this.seams.tag(tag)
+    if (indexed !== undefined) return indexed as number
     let removed = 0
     for (const [key, entry] of this.entries) {
       if (entry.tags.includes(tag)) {
