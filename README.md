@@ -28,14 +28,32 @@ checks invariants, improves performance, and explains the trade-offs.
 ## Fastest judge path
 
 The shortest end-to-end demo starts the Python LogScope interview. It requires
-Node.js **22.6+**, Git, ripgrep (`rg`), and Docker Desktop running Linux
-containers. Python is included in the candidate image, so it is not needed on
-the host for this flow.
+Node.js **22.6+**, Git, ripgrep (`rg`), and a Docker daemon running Linux
+containers. Use Docker Desktop on Windows or macOS, or Docker Engine on Linux.
+On Linux, make sure your current user can run `docker` without `sudo`. Python
+is included in the candidate image, so it is not needed on the host for this
+flow.
+
+### Windows PowerShell
 
 ```powershell
 git clone <repository-url>
 Set-Location openai_interview_platform
 Copy-Item .env.example .env
+npm ci
+
+# Builds the image needed for the LogScope Python task.
+docker build -t challenge-py images/challenge-py
+
+npm run dev
+```
+
+### Linux / macOS Bash
+
+```bash
+git clone <repository-url>
+cd openai_interview_platform
+cp .env.example .env
 npm ci
 
 # Builds the image needed for the LogScope Python task.

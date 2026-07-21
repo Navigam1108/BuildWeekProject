@@ -69,7 +69,7 @@ export default function HomePage() {
         <p>OpenAI Codex with GPT-5.6 accelerated the product scaffolding, repository-pack design, Docker workflow, and iterative debugging. The interview philosophy, scoring approach, review, and final product decisions remained human-directed.</p>
       </section>
 
-      <section className="story-close"><div className="eyebrow">Scout</div><h2>Stop checking answers. Start evaluating engineering judgment.</h2><Link className="button primary" href="/admin">Start a repository interview</Link></section>
+      <section className="story-close" id="closing"><div className="eyebrow">Scout</div><h2>Stop checking answers. Start evaluating engineering judgment.</h2><Link className="button primary" href="/admin">Start a repository interview</Link></section>
     </main>
   )
 }

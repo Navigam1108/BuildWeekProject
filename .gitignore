@@ -18,3 +18,8 @@ VARIANT-CALIBRATION.md
 DEVPOST-SUBMISSION.md
 challenges/risk-router-cpp/CALIBRATION.md
 DEMO_RECORDING_REPORT.md
+
+# Images
+*.png
+assets/
+public/demo/
