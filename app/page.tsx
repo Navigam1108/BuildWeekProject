@@ -1,86 +1,75 @@
+import Image from "next/image"
 import Link from "next/link"
 
 const interviewSignals = [
-  ["Investigate", "Trace a real service, identify the hot path, and choose what is worth fixing first."],
-  ["Build", "Improve a scoped part of the codebase while preserving contracts and invariants."],
-  ["Prove", "Use tests and benchmarks to show the change is correct and materially faster."],
-  ["Explain", "Discuss prioritization, trade-offs, and what you would improve next."],
+  ["Explore", "Read a real service, trace the important paths, and understand the constraints before changing code."],
+  ["Prioritize", "Choose the improvement with the strongest likely impact instead of chasing every available task."],
+  ["Improve", "Make a focused change while preserving behavior and existing contracts."],
+  ["Prove", "Use tests and benchmarks to show that the repository is both correct and meaningfully better."],
+]
+
+const evidence = [
+  ["Live workspace", "A browser-based VS Code session where candidates investigate and implement in a real repository."],
+  ["Measured progress", "Tests, benchmarks, and mission-level progress make partial improvements visible."],
+  ["Interview evidence", "Review the work, elapsed time, scorecard, and the trade-offs behind the change."],
 ]
 
 export default function HomePage() {
   return (
-    <main className="shell landing-shell">
-      <nav className="topbar landing-nav">
+    <main className="shell landing-shell story-shell">
+      <nav className="topbar story-nav">
         <div><div className="brand">Scout<span>.</span></div><div className="muted">Repository interview platform</div></div>
-        <Link className="button" href="/admin">Open interviewer console</Link>
+        <div className="story-nav-actions"><a href="#problem">Why Scout</a><a href="#format">Interview format</a><Link className="button" href="/admin">Open interviewer console</Link></div>
       </nav>
 
-      <section className="landing-hero">
-        <div className="landing-hero-copy">
-          <div className="eyebrow">Technical interviews for real engineering work</div>
-          <h1>Stop interviewing for a blank editor.</h1>
-          <p className="landing-lede">LeetCode-style rounds reward memorized patterns under artificial constraints. They rarely show how a candidate investigates an unfamiliar service, prioritizes a real bottleneck, or makes a safe production-minded change.</p>
-          <p>Scout is an interview platform for evaluating those skills. Candidates work in a multi-file repository, improve a performance-sensitive service, and show their reasoning with tests and benchmark evidence.</p>
-          <div className="actions">
-            <Link className="button primary" href="/admin">Browse interview environments</Link>
-            <Link className="button" href="/admin">Start a demo interview</Link>
-          </div>
+      <section className="story-hero">
+        <div className="story-hero-art"><Image src="/demo/traditional-interview-pressure.png" alt="Engineer facing an empty editor and countdown clock" fill priority sizes="(max-width: 1240px) 100vw, 1180px" /></div>
+        <div className="story-hero-shade" />
+        <div className="story-hero-copy">
+          <div className="eyebrow">The hiring-signal problem</div>
+          <h1>A blank editor cannot show how an engineer works.</h1>
+          <p>Traditional coding rounds reward puzzle recall under artificial pressure. They rarely reveal how a candidate understands an unfamiliar system, chooses a bottleneck, or proves an improvement is safe.</p>
+          <div className="actions"><a className="button primary" href="#problem">See the interview problem</a><Link className="button story-hero-button" href="/admin">Run the live demo</Link></div>
         </div>
-        <aside className="landing-proof-card">
-          <div className="eyebrow">The Scout format</div>
-          <div className="landing-stat"><strong>9</strong><span>production-shaped interview repositories</span></div>
-          <div className="landing-stat"><strong>5</strong><span>independent engineering missions per interview</span></div>
-          <div className="landing-stat"><strong>3</strong><span>candidate runtimes: Python, TypeScript, and C++</span></div>
-          <p className="muted">Designed for roughly an hour. Sessions stay open until the interviewer ends them.</p>
-        </aside>
+        <div className="story-hero-signals"><span>Real repository</span><span>Multiple improvement paths</span><span>Evidence-based review</span></div>
       </section>
 
-      <section className="landing-section">
-        <div className="landing-section-heading">
-          <div className="eyebrow">The interview problem</div>
-          <h2>Algorithms matter. Isolated puzzles are not the whole job.</h2>
-          <p className="muted">A great engineer needs algorithmic thinking, but uses it in the context of interfaces, data flow, observability, failure modes, and existing code.</p>
-        </div>
-        <div className="landing-problem-grid">
-          <article className="landing-problem-card"><span className="landing-problem-number">01</span><h3>No codebase context</h3><p className="muted">A single-function prompt cannot assess how someone reads a service, maps ownership, or finds the true bottleneck.</p></article>
-          <article className="landing-problem-card"><span className="landing-problem-number">02</span><h3>Memorization over judgment</h3><p className="muted">Recognizing a named pattern is different from deciding whether an index, cache, heap, or batch is the right trade-off.</p></article>
-          <article className="landing-problem-card"><span className="landing-problem-number">03</span><h3>All-or-nothing scoring</h3><p className="muted">A candidate can demonstrate strong engineering by improving two missions safely. A puzzle-style pass/fail score often misses that signal.</p></article>
+      <section className="story-section story-problem" id="problem">
+        <div className="story-section-intro"><div className="eyebrow">Why traditional rounds break down</div><h2>One isolated answer is a weak proxy for engineering judgment.</h2><p className="muted">The problem is not the candidate. It is an assessment that removes context, encourages pattern recall, and asks one answer to carry too much signal.</p></div>
+        <div className="story-problem-grid">
+          <article><span>01</span><h3>No system context</h3><p>A single prompt cannot show how someone reads a service, maps constraints, or finds the real hot path.</p></article>
+          <article><span>02</span><h3>Recall over judgment</h3><p>Recognizing a trick is different from deciding what improvement is worth making in an existing system.</p></article>
+          <article><span>03</span><h3>One-screen AI answers</h3><p>When a hidden tool can answer one prompt, the interview needs stronger evidence than the final code alone.</p></article>
         </div>
       </section>
 
-      <section className="landing-section landing-format-section">
-        <div className="landing-section-heading">
-          <div className="eyebrow">Interview format</div>
-          <h2>One repository. Multiple credible ways to demonstrate impact.</h2>
-        </div>
-        <div className="landing-format-grid">
-          <div className="landing-format-steps">{interviewSignals.map(([title, description], index) => <article className="landing-format-step" key={title}><span>{String(index + 1).padStart(2, "0")}</span><div><h3>{title}</h3><p className="muted">{description}</p></div></article>)}</div>
-          <aside className="landing-comparison">
-            <div className="eyebrow">What changes</div>
-            <div className="landing-comparison-row"><span>Candidate task</span><strong>Production-shaped repository</strong></div>
-            <div className="landing-comparison-row"><span>Interview signal</span><strong>Investigation and trade-offs</strong></div>
-            <div className="landing-comparison-row"><span>Evidence</span><strong>Tests, benchmarks, mission scorecard</strong></div>
-            <div className="landing-comparison-row"><span>Strong outcome</span><strong>2-3 well-executed improvements</strong></div>
-          </aside>
-        </div>
+      <section className="story-section story-split story-ai-section">
+        <div className="story-visual-frame"><Image src="/demo/ai-assessment-dilemma.png" alt="Conceptual illustration of the AI assessment dilemma" width={1600} height={900} sizes="(max-width: 800px) 100vw, 56vw" /></div>
+        <div className="story-copy-block"><div className="eyebrow">AI exposed the flaw</div><h2>Surveillance is not a better interview.</h2><p>One-screen answer tools make a puzzle-only assessment harder to trust. Adding more browser locks or camera checks does not reveal how someone thinks inside a real system.</p><p>Scout changes the format instead: candidates work in context, choose a path, and demonstrate impact with evidence.</p></div>
       </section>
 
-      <section className="landing-section">
-        <div className="landing-section-heading">
-          <div className="eyebrow">Interviewer experience</div>
-          <h2>Review evidence, not just the final answer.</h2>
-        </div>
-        <div className="grid three landing-evidence-grid">
-          <article className="card"><div className="stat">01</div><h3>Real candidate workspace</h3><p className="muted">Every interview starts a fresh browser IDE and repository with visible tests and a replayable benchmark.</p></article>
-          <article className="card"><div className="stat">02</div><h3>Mission-level progress</h3><p className="muted">See correctness, benchmark deltas, golden-reference context, and the subset of missions a candidate improved.</p></article>
-          <article className="card"><div className="stat">03</div><h3>Structured interview review</h3><p className="muted">Use the session timeline, replay profile, elapsed time, and scorecard to guide a concrete follow-up conversation.</p></article>
-        </div>
+      <section className="story-section story-split story-solution" id="format">
+        <div className="story-copy-block"><div className="eyebrow">The Scout format</div><h2>Start with a real system. Let engineering judgment become visible.</h2><p>Scout is a growing library of production-shaped interview repositories. Every repository includes a realistic ticket, multiple files, tests, benchmarks, and several independently measurable opportunities to improve the system.</p><p>There is no prescribed solution and no expectation to finish everything. A strong candidate identifies a high-value opportunity, makes a focused change, and proves it worked.</p><Link className="button primary" href="/admin">Browse interview environments</Link></div>
+        <div className="story-visual-frame story-solution-art"><Image src="/demo/repository-engineering-judgment.png" alt="Conceptual illustration of navigating and improving a repository" width={1600} height={900} sizes="(max-width: 800px) 100vw, 56vw" /></div>
       </section>
 
-      <section className="landing-cta">
-        <div><div className="eyebrow">Ready to interview differently?</div><h2>Choose a repository and start the interview workspace.</h2><p className="muted">The interviewer console contains the current task catalog, session controls, grading evidence, and candidate workspace links.</p></div>
-        <Link className="button primary" href="/admin">Go to interviewer console</Link>
+      <section className="story-section story-process">
+        <div className="story-section-intro"><div className="eyebrow">A better interview signal</div><h2>One repository. Several credible ways to demonstrate impact.</h2></div>
+        <div className="story-process-grid">{interviewSignals.map(([title, description], index) => <article key={title}><span>{String(index + 1).padStart(2, "0")}</span><h3>{title}</h3><p className="muted">{description}</p></article>)}</div>
       </section>
+
+      <section className="story-section story-evidence">
+        <div className="story-section-intro"><div className="eyebrow">The live interview</div><h2>Review evidence, not just the final answer.</h2><p className="muted">Use the live workspace and scorecard to guide a concrete conversation about what changed, why it was chosen, and what comes next.</p></div>
+        <div className="story-evidence-grid">{evidence.map(([title, description], index) => <article key={title}><span>{String(index + 1).padStart(2, "0")}</span><h3>{title}</h3><p>{description}</p></article>)}</div>
+        <div className="story-live-cta"><div><div className="eyebrow">Ready for the live workflow?</div><h3>Choose a repository, open the candidate workspace, and review one real submission.</h3></div><Link className="button primary" href="/admin">Open interviewer console</Link></div>
+      </section>
+
+      <section className="story-build-note" id="built-with-codex">
+        <div><div className="eyebrow">Built for OpenAI Builder Week</div><h2>From idea to working interview platform in under a night.</h2></div>
+        <p>OpenAI Codex with GPT-5.6 accelerated the product scaffolding, repository-pack design, Docker workflow, and iterative debugging. The interview philosophy, scoring approach, review, and final product decisions remained human-directed.</p>
+      </section>
+
+      <section className="story-close"><div className="eyebrow">Scout</div><h2>Stop checking answers. Start evaluating engineering judgment.</h2><Link className="button primary" href="/admin">Start a repository interview</Link></section>
     </main>
   )
 }
