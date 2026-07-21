@@ -25,9 +25,13 @@ export default function CandidatePage({ params }: { params: Promise<{ token: str
   async function submit() {
     if (!confirm("Submit your current work for grading? You can keep working afterward.")) return
     setNotice("Grading in progress...")
-    const response = await fetch(`/api/candidate/${token}/submit`, { method: "POST" })
-    const data = await response.json()
-    setNotice(response.ok ? "Submitted. You can keep working and resubmit." : data.error || "Grading failed")
+    try {
+      const response = await fetch(`/api/candidate/${token}/submit`, { method: "POST" })
+      const data = await response.json() as { ok?: boolean; error?: string }
+      setNotice(response.ok && data.ok ? "Submitted. You can keep working and resubmit." : data.error || "Grading failed")
+    } catch {
+      setNotice("Unable to reach the grading service. Please submit again in a moment.")
+    }
   }
 
   if (!state) return <main className="shell"><div className="muted">Loading workspace...</div></main>

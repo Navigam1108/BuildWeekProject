@@ -1,5 +1,6 @@
 node_modules/
 .next/
+.next-dev/
 .data/
 .env
 *.log
@@ -7,3 +8,13 @@ __pycache__/
 *.pyc
 *.pyo
 tsconfig.tsbuildinfo
+
+# Documentation markdown files (non-code)
+HANDOFFS.md
+INTERVIEW-FRAMEWORK.md
+MVP-ARCHITECTURE.md
+REMAINING-WORK.md
+VARIANT-CALIBRATION.md
+DEVPOST-SUBMISSION.md
+challenges/risk-router-cpp/CALIBRATION.md
+DEMO_RECORDING_REPORT.md
