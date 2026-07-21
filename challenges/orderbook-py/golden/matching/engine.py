@@ -1,4 +1,5 @@
 from collections import deque
+from itertools import islice
 from dataclasses import dataclass
 import heapq
 
@@ -71,4 +72,4 @@ class OrderBook:
         return [trade]
 
     def recent_trades(self, limit: int = 100) -> list[Trade]:
-        return list(self.trades)[-limit:]
+        return list(reversed(list(islice(reversed(self.trades), limit))))

@@ -5,6 +5,7 @@ from dataclasses import dataclass
 class LogRecord:
     timestamp: int
     message: str
+    source: str = "api"
 
 
 class QueryEngine:
@@ -14,8 +15,18 @@ class QueryEngine:
         self.records = records
 
     def query_logs_by_time_range(self, start: int, end: int) -> list[LogRecord]:
-        # Deliberately simple implementation for the interview task.
         return [record for record in self.records if start <= record.timestamp <= end]
+
+    def query_by_source(self, source: str) -> list[LogRecord]:
+        return [record for record in self.records if record.source == source]
+
+    def top_sources(self, limit: int) -> list[tuple[str, int]]:
+        sources = []
+        for record in self.records:
+            if record.source not in sources:
+                sources.append(record.source)
+        totals = [(source, sum(record.source == source for record in self.records)) for source in sources]
+        return sorted(totals, key=lambda item: (-item[1], item[0]))[:limit]
 
     def count(self) -> int:
         return len(self.records)

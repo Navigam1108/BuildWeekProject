@@ -71,6 +71,8 @@ th { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spa
 .portfolio-item { border: 1px solid var(--line); border-radius: 10px; background: #0d1528; padding: 15px; }
 .portfolio-item h3 { margin: 6px 0; font-size: 16px; }
 .portfolio-item p { font-size: 13px; margin: 0 0 12px; }
+.mission-card.not_measured { border-style: dashed; }
+.mission-metric { color: var(--muted); font-size: 12px; margin-top: 7px; }
 .code { white-space: pre-wrap; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 13px; line-height: 1.55; background: #080d18; padding: 15px; border-radius: 8px; overflow: auto; }
 .scorecard { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 14px; }
 .scorecard h3 { font-size: 14px; letter-spacing: .04em; text-transform: uppercase; color: var(--accent); margin: 0 0 10px; }

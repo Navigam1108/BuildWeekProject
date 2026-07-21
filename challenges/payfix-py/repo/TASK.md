@@ -1,6 +1,9 @@
-# FIN-918: nightly reconciliation
+# FIN-918: reconciliation close is missing its window
 
-Nightly reconciliation is too slow on the production-sized transaction export.
-Reconcile payments and ledger entries without changing the public API.
+The nightly payment close is running late as volume grows. The runbook calls
+out ledger matching, duplicate-reference reporting, currency enrichment,
+account validation, and the exception queue as the most expensive stages.
+Preserve the current behavior and output ordering while making practical
+improvements where they have the greatest operational impact.
 
 Run `make test` and `make bench` before submitting.

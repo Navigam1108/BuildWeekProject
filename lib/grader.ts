@@ -24,8 +24,12 @@ export type MissionResult = {
   name: string
   concepts: string[]
   weight: number
-  score: number
+  score: number | null
   benchmark: string
+  baseline_ms: number | null
+  candidate_ms: number | null
+  golden_ms: number | null
+  status: "measured" | "not_measured"
 }
 
 export type Scorecard = {
@@ -45,7 +49,11 @@ function computeScorecard(challengeSlug: string, report: Record<string, any>): S
   const slaMet = report?.bench?.sla_met !== false
   const hiddenPassed = report?.tests?.hidden_passed || 0
   const hiddenFailed = report?.tests?.hidden_failed || 0
-  const testsOk = hiddenFailed === 0
+  const visibleOk = (report?.tests?.visible_failed || 0) === 0
+  const rawMissions = (Array.isArray(report?.missions) ? report.missions : []) as Array<{ id: string; baseline_ms?: number; candidate_ms?: number; golden_ms?: number; passed?: boolean }>
+  const evidence = new Map<string, { baseline_ms?: number; candidate_ms?: number; golden_ms?: number; passed?: boolean }>(
+    rawMissions.map((mission) => [mission.id, mission])
+  )
 
   let total = 0
   let max = 0
@@ -56,25 +64,29 @@ function computeScorecard(challengeSlug: string, report: Record<string, any>): S
     const weight = mission.weight || 20
     max += weight
 
-    let score = 0
-    if (testsOk) score += weight * 0.35
-    if (improvement > 0) score += weight * 0.35 * Math.min(1, improvement / 100)
-    if (slaMet) score += weight * 0.20
-    if (hiddenPassed > 0) score += weight * 0.10 * (hiddenPassed / (hiddenPassed + hiddenFailed || 1))
-
+    const metric = evidence.get(mission.id)
+    if (!metric || typeof metric.baseline_ms !== "number" || typeof metric.candidate_ms !== "number" || typeof metric.golden_ms !== "number") {
+      return { id: mission.id, name: mission.name, concepts: mission.concepts, weight, score: null, benchmark: mission.benchmark, baseline_ms: null, candidate_ms: null, golden_ms: null, status: "not_measured" }
+    }
+    const span = Math.max(1, metric.baseline_ms - metric.golden_ms)
+    const progress = Math.max(0, Math.min(1, (metric.baseline_ms - metric.candidate_ms) / span))
+    const correctness = metric.passed !== false && visibleOk ? 1 : 0
+    const score = weight * (0.35 * correctness + 0.35 * progress + 0.20 * Math.min(1, metric.golden_ms / Math.max(1, metric.candidate_ms)) + 0.10 * (hiddenPassed / (hiddenPassed + hiddenFailed || 1)))
     total += score
-    return { id: mission.id, name: mission.name, concepts: mission.concepts, weight, score: Math.round(score), benchmark: mission.benchmark }
+    return { id: mission.id, name: mission.name, concepts: mission.concepts, weight, score: Math.round(score), benchmark: mission.benchmark, baseline_ms: metric.baseline_ms, candidate_ms: metric.candidate_ms, golden_ms: metric.golden_ms, status: "measured" }
   })
 
   if (missions.length === 0) {
     max = 100
-    if (testsOk) total += 55
+    if (visibleOk) total += 55
     total += improvement
     if (slaMet) total += 20
-    results.push({ id: "primary", name: "Primary benchmark", concepts: [], weight: 100, score: Math.round(total), benchmark: "Overall" })
+    results.push({ id: "primary", name: "Primary benchmark", concepts: [], weight: 100, score: Math.round(total), benchmark: "Overall", baseline_ms: report?.bench?.baseline_ms || null, candidate_ms: report?.bench?.candidate_ms || null, golden_ms: null, status: "measured" })
   }
 
-  return { missions: results, total: Math.round(total), max, percentage: Math.round((total / max) * 100), golden_pct: goldenPct, concepts: [...allConcepts] }
+  const measured = results.filter((mission) => mission.status === "measured")
+  const measuredMax = measured.reduce((sum, mission) => sum + mission.weight, 0)
+  return { missions: results, total: Math.round(total), max: measuredMax || max, percentage: measuredMax ? Math.round((total / measuredMax) * 100) : 0, golden_pct: goldenPct, concepts: [...allConcepts] }
 }
 
 export async function gradeSession(session: SessionRow) {

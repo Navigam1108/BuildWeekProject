@@ -1,5 +1,11 @@
 [
   {
+    "name": "work",
+    "kind": "method",
+    "path": "benchmarks/bench.mjs",
+    "line": 5
+  },
+  {
     "name": "Scheduler",
     "kind": "class",
     "path": "src/scheduler.mjs",
@@ -15,36 +21,48 @@
     "name": "add",
     "kind": "method",
     "path": "src/scheduler.mjs",
-    "line": 3
+    "line": 8
   },
   {
     "name": "register",
     "kind": "method",
     "path": "src/scheduler.mjs",
-    "line": 4
+    "line": 12
+  },
+  {
+    "name": "release",
+    "kind": "method",
+    "path": "src/scheduler.mjs",
+    "line": 16
   },
   {
     "name": "complete",
     "kind": "method",
     "path": "src/scheduler.mjs",
-    "line": 5
+    "line": 21
   },
   {
     "name": "ready",
     "kind": "method",
     "path": "src/scheduler.mjs",
-    "line": 6
+    "line": 25
   },
   {
     "name": "assign",
     "kind": "method",
     "path": "src/scheduler.mjs",
-    "line": 7
+    "line": 31
   },
   {
     "name": "dueRetries",
     "kind": "method",
     "path": "src/scheduler.mjs",
-    "line": 12
+    "line": 41
+  },
+  {
+    "name": "scheduledBetween",
+    "kind": "method",
+    "path": "src/scheduler.mjs",
+    "line": 45
   }
 ]

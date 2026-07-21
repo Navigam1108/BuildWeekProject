@@ -11,7 +11,7 @@ task: |
   choice, retry timing, and calendar scans. Run `make test` and `make bench`.
 grading:
   bench_target_ms: 400
-  bench_baseline_ms: 5000
+  bench_baseline_ms: 7500
   golden_target_pct: 50
   missions:
     - { id: ready, name: Ready queue discovery, concepts: [queue, dependency count], weight: 20, benchmark: Ready scan }

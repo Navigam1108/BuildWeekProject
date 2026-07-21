@@ -1,0 +1,7 @@
+{
+  "routes": { "metric": "routes_ms", "baseline_ms": 1500, "golden_ms": 4 },
+  "middleware": { "metric": "middleware_ms", "baseline_ms": 25, "golden_ms": 3 },
+  "weighted": { "metric": "weighted_ms", "baseline_ms": 3200, "golden_ms": 5 },
+  "policy": { "metric": "policy_ms", "baseline_ms": 90, "golden_ms": 4 },
+  "cache": { "metric": "cache_ms", "baseline_ms": 1900, "golden_ms": 10 }
+}

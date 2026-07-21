@@ -1,0 +1,7 @@
+{
+  "node-lookup": { "metric": "node_lookup_ms", "baseline_ms": 2, "golden_ms": 0.15 },
+  "rack-health": { "metric": "rack_health_ms", "baseline_ms": 60, "golden_ms": 15 },
+  "weighted-route": { "metric": "weighted_route_ms", "baseline_ms": 190, "golden_ms": 0.2 },
+  "snapshot": { "metric": "topology_snapshot_ms", "baseline_ms": 1300, "golden_ms": 40 },
+  "invalidation": { "metric": "invalidation_ms", "baseline_ms": 10, "golden_ms": 0.25 }
+}

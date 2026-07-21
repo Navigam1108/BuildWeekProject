@@ -21,7 +21,7 @@ async function nextPort() {
   throw new Error("No free interview ports available");
 }
 
-export async function createSession(input: { challengeSlug: string; candidateName: string; durationMin?: number }) {
+export async function createSession(input: { challengeSlug: string; candidateName: string; durationMin?: number; candidateOrigin?: string }) {
   const challenge = getChallenge(input.challengeSlug);
   if (!challenge) throw new Error("Challenge not found");
   const id = nanoid(12);
@@ -41,7 +41,7 @@ export async function createSession(input: { challengeSlug: string; candidateNam
     execFileSync("git", ["-c", "user.email=scout@local", "-c", "user.name=Scout", "commit", "-m", "start"], { cwd: repoPath, stdio: "ignore" });
 
     const idePort = await nextPort();
-    const image = challenge.language === "typescript" ? config.dockerImageTs : config.dockerImagePy;
+    const image = challenge.language === "typescript" ? config.dockerImageTs : challenge.language === "cpp" ? config.dockerImageCpp : config.dockerImagePy;
     const container = await docker.createContainer({
       Image: image,
       Env: [`PASSWORD=${idePassword}`],
@@ -58,7 +58,11 @@ export async function createSession(input: { challengeSlug: string; candidateNam
     });
     await container.start();
     db.prepare("UPDATE sessions SET container_id = ?, ide_port = ?, status = 'active' WHERE id = ?").run(container.id, idePort, id);
-    return { id, token, candidateUrl: `http://${config.publicHost}/s/${token}`, ideUrl: `http://${config.publicHost}:${idePort}`, idePassword };
+    // Generate links from the request origin when a session is created.  This
+    // preserves a local dev-server port (for example localhost:3000) instead
+    // of sending candidates to port 80.
+    const candidateOrigin = (input.candidateOrigin || `http://${config.publicHost}`).replace(/\/$/, "");
+    return { id, token, candidateUrl: `${candidateOrigin}/s/${token}`, ideUrl: `http://${config.publicHost}:${idePort}`, idePassword };
   } catch (error) {
     db.prepare("UPDATE sessions SET status = 'error', ended_at = ? WHERE id = ?").run(now(), id);
     throw error;

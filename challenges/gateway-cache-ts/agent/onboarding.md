@@ -1,6 +1,6 @@
 # Gateway project brief
 
-Gateway is a small TypeScript package with a response cache under `src/`. The
-public class is `ResponseCache`, with `get`, `set`, and `size` methods. A test
-script is in `tests/` and a replay-like workload is in `benchmarks/`. Run `make
-test` and `make bench` from the repository root.
+Gateway provides a bounded response cache for a hot API path. `ResponseCache`
+also owns expiry cleanup, header canonicalization, shared in-flight requests,
+and tag-based removal. The repository includes replay-style benchmarks and
+tests; run `make test` and `make bench` from the repository root.

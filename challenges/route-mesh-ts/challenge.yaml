@@ -11,7 +11,7 @@ task: |
   middleware selection, weighted backends, authorization checks, and route cache.
 grading:
   bench_target_ms: 300
-  bench_baseline_ms: 4000
+  bench_baseline_ms: 9000
   golden_target_pct: 50
   missions:
     - { id: routes, name: Route resolution, concepts: [trie, prefix map], weight: 20, benchmark: Path lookup }

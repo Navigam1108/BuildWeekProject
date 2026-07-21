@@ -1,5 +1,7 @@
-# API-602: bounded response cache
+# API-602: gateway replay saturation
 
-The gateway process grows continuously during a replay load and eventually
-OOMs. Keep the response cache bounded without changing its public `get`/`set`
-API. Run `make test` and `make bench` before submitting.
+Replay traffic is exposing expensive work in the response cache. The gateway
+must keep its bounded cache responsive while expiring stale responses,
+canonicalizing request headers, sharing in-flight upstream work, and removing
+responses by tag. Preserve the public behavior and use `make test` and
+`make bench` to validate each change.

@@ -39,7 +39,28 @@ Build the candidate image before creating a real container-backed session:
 
 ```powershell
 docker build -t challenge-py images/challenge-py
+docker build -t challenge-ts images/challenge-ts
+docker build -t challenge-cpp images/challenge-cpp
 ```
+
+## Browser-based compile and test workflow
+
+The candidate never needs a local compiler. Creating a session starts a
+Docker-backed code-server workspace, mounted with that candidate's repository.
+The candidate page embeds code-server in the browser; its integrated terminal
+runs commands inside the same Linux container that the grader uses.
+
+1. Build the language images once using the commands above.
+2. Run `npm run dev`, open `http://localhost:3000/admin`, and create a session.
+3. Open the generated candidate link. The browser IDE includes a terminal.
+4. Run `make test` for visible correctness checks and `make bench` for the
+   replay benchmark. For `risk-router-cpp`, these invoke `g++ -std=c++20` in
+   the `challenge-cpp` image.
+5. Use **Submit** to run the hidden grader in that same container and persist
+   the structured report for the interviewer.
+
+The C++ image has been smoke-tested with code-server HTTP access, `make test`,
+and `make bench`.
 
 Set `AGENT_PROVIDER=anthropic` and `ANTHROPIC_API_KEY` for the cloud Scout
 demo, or run Ollama and keep the default local provider.
@@ -104,6 +125,7 @@ improving two or three is a strong outcome. See
 - Inventory search: `inventory-search-py`
 - Job scheduler: `dispatch-scheduler-ts`
 - API route mesh: `route-mesh-ts`
+- C++ risk allocation router: `risk-router-cpp`
 
 ## Verification
 

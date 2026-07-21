@@ -1,5 +1,11 @@
 [
   {
+    "name": "work",
+    "kind": "method",
+    "path": "benchmarks/bench.mjs",
+    "line": 5
+  },
+  {
     "name": "Router",
     "kind": "class",
     "path": "src/router.mjs",
@@ -15,30 +21,36 @@
     "name": "resolve",
     "kind": "method",
     "path": "src/router.mjs",
-    "line": 3
+    "line": 8
   },
   {
     "name": "middleware",
     "kind": "method",
     "path": "src/router.mjs",
-    "line": 4
+    "line": 12
   },
   {
     "name": "authorized",
     "kind": "method",
     "path": "src/router.mjs",
-    "line": 5
+    "line": 16
   },
   {
     "name": "backend",
     "kind": "method",
     "path": "src/router.mjs",
-    "line": 6
+    "line": 21
   },
   {
     "name": "cached",
     "kind": "method",
     "path": "src/router.mjs",
-    "line": 7
+    "line": 27
+  },
+  {
+    "name": "invalidate",
+    "kind": "method",
+    "path": "src/router.mjs",
+    "line": 35
   }
 ]

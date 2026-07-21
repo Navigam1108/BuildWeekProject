@@ -1,6 +1,1 @@
-[
-  {"name":"QueryEngine","kind":"class","path":"logscope/query_engine.py","line":8},
-  {"name":"query_logs_by_time_range","kind":"method","path":"logscope/query_engine.py","line":14,"scope":"QueryEngine"},
-  {"name":"LogRecord","kind":"class","path":"logscope/query_engine.py","line":4},
-  {"name":"parse_line","kind":"function","path":"logscope/ingestion.py","line":4}
-]
+[{"name":"LogRecord","kind":"class","path":"logscope/query_engine.py","line":5},{"name":"QueryEngine","kind":"class","path":"logscope/query_engine.py","line":11},{"name":"query_logs_by_time_range","kind":"method","path":"logscope/query_engine.py","line":17,"scope":"QueryEngine"},{"name":"query_by_source","kind":"method","path":"logscope/query_engine.py","line":20,"scope":"QueryEngine"},{"name":"top_sources","kind":"method","path":"logscope/query_engine.py","line":23,"scope":"QueryEngine"},{"name":"suppress_duplicates","kind":"function","path":"logscope/ingestion.py","line":9},{"name":"expired_record_ids","kind":"function","path":"logscope/retention.py","line":9}]

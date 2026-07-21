@@ -6,7 +6,7 @@ import { paths } from "./config";
 export type ChallengeConfig = {
   slug: string;
   title: string;
-  language: "python" | "typescript";
+  language: "python" | "typescript" | "cpp";
   level: "junior" | "mid";
   image: string;
   domain?: string;

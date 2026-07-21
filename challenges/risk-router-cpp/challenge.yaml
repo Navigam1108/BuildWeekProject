@@ -1,0 +1,22 @@
+slug: risk-router-cpp
+title: "RiskRouter — low-latency allocation"
+language: cpp
+level: mid
+image: challenge-cpp
+domain: financial infrastructure
+summary: "Improve a C++ allocation router used to select healthy risk-processing shards."
+task: |
+  RISK-512: The allocation router has become a p99 bottleneck during market-open
+  bursts. Preserve the ShardRouter public API while improving node lookup,
+  healthy-rack selection, weighted routing, snapshot generation, and cache
+  invalidation. Run `make test` and `make bench` from the integrated terminal.
+grading:
+  bench_target_ms: 300
+  bench_baseline_ms: 6500
+  golden_target_pct: 50
+  missions:
+    - { id: node-lookup, name: Node lookup, concepts: [hash map, identity index], weight: 20, benchmark: Registration and removal }
+    - { id: rack-health, name: Rack health query, concepts: [secondary index, filtering], weight: 20, benchmark: Healthy rack lookup }
+    - { id: weighted-route, name: Weighted routing, concepts: [prefix sum, binary search], weight: 20, benchmark: Shard selection }
+    - { id: snapshot, name: Snapshot assembly, concepts: [incremental summary, caching], weight: 20, benchmark: Topology snapshot }
+    - { id: invalidation, name: Route invalidation, concepts: [cache invalidation, versioning], weight: 20, benchmark: Configuration refresh }

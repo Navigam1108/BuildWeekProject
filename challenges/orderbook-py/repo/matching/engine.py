@@ -61,4 +61,4 @@ class OrderBook:
         return [trade]
 
     def recent_trades(self, limit: int = 100) -> list[Trade]:
-        return self.trades[-limit:]
+        return list(reversed(self.trades))[:limit][::-1]

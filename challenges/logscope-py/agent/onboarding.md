@@ -1,9 +1,6 @@
 # LogScope project brief
 
-LogScope is a small Python package that models a read-only log query service.
-The public entry point is `logscope.query_engine.QueryEngine`. Records are
-represented by `LogRecord` objects with a numeric timestamp and message.
-
-Supporting modules cover ingestion, retention, compression, and timestamp
-parsing. The repository includes a unittest suite under `tests/` and a benchmark
-under `benchmarks/`. Run `make test` and `make bench` from the repository root.
+LogScope models an event-store query service. `QueryEngine` owns time-window
+reads, source-scoped retrieval, and source summaries; ingestion and retention
+helpers handle maintenance work. Records include timestamp, message, and
+source fields. Run `make test` and `make bench` from the repository root.

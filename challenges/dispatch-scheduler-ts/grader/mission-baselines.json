@@ -1,0 +1,7 @@
+{
+  "ready": { "metric": "ready_ms", "baseline_ms": 1700, "golden_ms": 60 },
+  "release": { "metric": "release_ms", "baseline_ms": 26, "golden_ms": 25 },
+  "workers": { "metric": "workers_ms", "baseline_ms": 2500, "golden_ms": 3 },
+  "retries": { "metric": "retries_ms", "baseline_ms": 240, "golden_ms": 3 },
+  "calendar": { "metric": "calendar_ms", "baseline_ms": 190, "golden_ms": 6 }
+}

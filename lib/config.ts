@@ -12,11 +12,12 @@ export const config = {
   localLlmBaseUrl: process.env.LOCAL_LLM_BASE_URL || "http://127.0.0.1:11434/v1",
   localLlmModel: process.env.LOCAL_LLM_MODEL || "qwen2.5-coder:7b",
   dataDir: path.resolve(process.env.DATA_DIR || ".data"),
-  publicHost: process.env.PUBLIC_HOST || "localhost",
+  publicHost: process.env.PUBLIC_HOST || "localhost:3000",
   sessionPortStart: intEnv(process.env.SESSION_PORT_RANGE?.split("-")[0], 40000),
   sessionPortEnd: intEnv(process.env.SESSION_PORT_RANGE?.split("-")[1], 40100),
   dockerImagePy: process.env.DOCKER_IMAGE_PY || "challenge-py",
-  dockerImageTs: process.env.DOCKER_IMAGE_TS || "challenge-ts"
+  dockerImageTs: process.env.DOCKER_IMAGE_TS || "challenge-ts",
+  dockerImageCpp: process.env.DOCKER_IMAGE_CPP || "challenge-cpp"
 };
 
 export const paths = {
